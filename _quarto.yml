@@ -3,16 +3,21 @@ project:
   output-dir: docs
 
 website:
-  title: "course_website"
-  navbar:
-    left:
+  title: "PLAN372"
+  sidebar:
+    search: true
+    contents:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - first_tutorial.qmd
+      - basic_data_wrangling.qmd
+      - data_wrangling_continued.qmd
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: minty
+      dark: slate
     css: styles.css
     toc: true
 

@@ -1,0 +1,233 @@
+---
+title: "Your first tutorial with R and markdown"
+format: html
+editor: visual
+---
+
+## Fundamentals of programming with R
+
+## R as a scientific calculator
+
+### Addition of two numbers
+
+```{r, collapse=TRUE}
+2+2
+```
+#### Exercise: Using regular mathematical symbols (+, -, /, and *), try more complex calculations.
+
+### Other mathematical functions
+
+```{r, collapse=TRUE}
+log(1)              # logarithm to base e
+
+log10(1)            # logarithm to base 10
+
+exp(1)              # natural antilog
+
+sqrt(4)             # square root
+
+4^2                 # 4 to the power of 2
+
+pi                  # not a function but useful
+```
+### Creating, naming, and manipulating objects
+
+Everything we create or manipulate using R is an object. It can range from a character "a", a number (1), a dataset, an image, a function, and more. Essentially, all data analysis involves creating and manipulating objects. 
+
+We use the assignment operator <- to create objects and assign those to object names. 
+
+For example,
+
+```{r, collapse=TRUE}
+a <- 5
+```
+
+We created an object "a" with value 5. On the top right side of RStudio, you can see a in your "Environment."
+
+Now we can perform mathematical operation by manipulating the object a.
+
+```{r, collapse=TRUE}
+a * 2
+
+a + a
+
+a ^ a
+```
+
+Similarly,
+
+```{r, collapse=TRUE}
+b <- 10
+
+(a + b) ^ 2
+```
+Objects that are often known as strings in programming (e.g. words, phrases, etc.) are assigned slightly differently.
+
+```{r, collapse=TRUE}
+string1 <- "this is a string"
+string1
+
+string2 <- "this is another string"
+string2
+
+# joining strings
+string3 <- paste0(string1, " ", string2)
+string3
+```
+#### Naming objects (in slides)
+
+### Working with data
+
+#### Creating a list of numbers 
+
+c() joins (concatenates) the numbers from one to five to create a vector. A vector in R is essentially a data type that stores numbers or strings.
+
+The vector can also be created using : symbol for sequences.
+
+== is an operator that checks if objects being compared are equal.
+
+```{r, collapse=TRUE}
+my_vector <- c(1, 2, 3, 4, 5)
+another_vector <- 1:5
+my_vector == another_vector
+```
+```{r, collapse=TRUE}
+my_vec <- c(2, 3, 1, 6, 4, 3, 3, 7)
+
+mean(my_vec)
+
+length(my_vec)
+```
+
+##### Exercise: 
+
+It's almost impossible to remember all programming syntax we need. A skill to develop is to find where to look for syntax when you need. You can refer to documentation, online resources like tutorials or books, or in your Integrated Development Environment (here, RStudio).
+
+Use a search engine (e.g. Google) to find out how you can calculate the standard deviation of "my_vec" in R.
+
+#### Extracting values from vectors
+
+##### We can use the position of elements in the vectors.
+
+```{r}
+my_vec[3] #accesses the third element in the vector
+
+my_vec[2:5] #accesses the second to the fifth elements in the vector
+
+```
+
+##### We can use conditionality
+
+```{r}
+my_vec[my_vec > 4] #values greater than 4
+
+my_vec[my_vec >2 & my_vec < 8] #values greater than two and less than 8
+
+my_vec[my_vec <2 | my_vec > 6] #values less than two or more than 6
+```
+
+#### Manipulating vectors
+
+##### Replacing elements
+
+```{r}
+my_vec[2] <- 100 #replacing the second element by 100
+my_vec
+
+# replace element that are less than or equal to 4 with 1000
+my_vec[my_vec <= 5] <- 200
+my_vec
+```
+
+##### Vectorization
+
+We can apply an operation to all elements of the vectors at the same time. This is known as vectroization, and is very useful in data analysis.
+
+```{r}
+# create a vector
+my_vec2 <- c(3, 5, 7, 1, 9, 20)
+
+# multiply each element by 5
+my_vec2 * 5
+```
+
+##### More operations
+
+```{r}
+# create a second vector
+my_vec3 <- c(17, 15, 13, 19, 11, 0)
+
+# add both vectors
+my_vec2 + my_vec3
+
+# multiply both vectors
+my_vec2 * my_vec3
+
+# sort vector by values
+vec_sort <- sort(my_vec)
+
+# sort in descending order
+vec_sort2 <- sort(my_vec, decreasing = TRUE)
+vec_sort2
+
+# reverse a vector
+rev_vec <- rev(my_vec)
+rev_vec
+```
+
+##### Missing data
+
+NA or not available is a common symbol to represent missingness in R.
+
+```{r}
+temp  <- c(7.2, NA, 7.1, 6.9, 6.5, 5.8, 5.8, 5.5, NA, 5.5)
+temp
+
+#calculate mean
+mean_temp <- mean(temp)
+mean_temp
+```
+
+It resulted in NA as mean because mathematical operations cannot be performed with NA values. We can remove NA using na.rm=TRUE
+
+```{r}
+mean_temp <- mean(temp, na.rm = TRUE)
+mean_temp
+```
+
+
+### Importing data from csv files
+
+While creating and manipulating vectors have been useful for learning fundamental concepts, we mostly work with existing dataset.
+
+```{r}
+# downloading data on E-ZPass Retailers Locations from NY Open Data portal using web link (URL)
+df1 <- read.csv("https://data.ny.gov/api/views/y59h-w6v4/rows.csv?accessType=DOWNLOAD&sorting=true")
+head(df1)
+```
+
+Downloading from your project directory
+
+```{r}
+df2 <- read.csv("retailers_locations.csv")
+head(df2)
+```
+
+### Add image in markdown document
+Copy the code between the inverted commas in the markdown document, not in the code chunk!
+
+```{r}
+"
+![R logo](https://www.r-project.org/Rlogo.png)
+"
+```
+
+
+![R logo](https://www.r-project.org/Rlogo.png)
+
+### Exercise: Download an image from the internet into your project directory. Embed that to the markdown.
+
+## Lab submission
+
+To submit the lab, zip qmd file, html file, and the folder that has contents for html files into a single zipped folder and submit as your lab.
+

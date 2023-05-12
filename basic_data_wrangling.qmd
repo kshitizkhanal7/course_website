@@ -1,0 +1,271 @@
+---
+title: "Basic data wrangling"
+format: html
+editor: visual
+---
+
+# Common data analysis operations in R
+
+While programming is general purpose, ranging from creating websites/apps to launching rockets to creating art, there are some operations that are most commonly used in data analysis. This tutorial covers the most common data analysis operations. 
+
+## Reading various kinds of data
+
+We deal with several data in urban analytics. In my own research, I have used tabular data, matrix data, network data, images, texts, and spatial data. R can be used to analyze all these data types and more. The most common data type is tabular data. In this tutorial we will deal with tabular data, and cover other data types while we work with those on other course modules.
+
+## Various data types
+
+A typical tabular data contains various types of numbers (integers, decimals), character string (e.g. for places, names, etc.), logical values (True or False), etc. These are called data types. 
+
+The main data types are:
+
+* Numeric data are numbers that contain a decimal. Actually they can also be whole numbers but we’ll gloss over that.
+* Integers are whole numbers (those numbers without a decimal point).
+* Logical data take on the value of either TRUE or FALSE. There’s also another special type of logical called NA to represent missing values.
+* Character data are used to represent string values. You can think of character strings as something like a word (or multiple words). A special type of character string is a factor, which is a string but with additional attributes (like levels or an order). We’ll cover factors later.
+
+R will usually identify data types on its own, but might need some help in correcting sometimes. There are prebuilt operations (functions) that we can use.
+
+You can use class() function to identify the data type (or class).
+
+```{r, collapse=TRUE}
+
+int <- 2L # Need to include L to specify integer
+class(int)
+
+num <- 2
+class(num)
+
+identical(int, num) # Check to see if int and num are identical
+
+all.equal(int, num) # On most machines this will be true
+
+char <- "hello"
+class(char)
+
+logi <- TRUE
+class(logi)
+```
+
+You can also check if or not an object belongs to a class.
+
+```{r, collapse=TRUE}
+is.numeric(num)
+
+is.character(num)
+
+is.character(char)
+
+is.logical(logi)
+```
+
+You can also coerce data to data types you think are more useful.
+
+```{r, collapse=TRUE}
+a <- 1234
+string_of_numbers <- as.character(a)
+string_of_numbers
+
+b <- "2022-08-31"
+class(b)
+b_as_date <- as.Date(b)
+
+# now that we have a date, we can use functions that work with dates
+class(b_as_date)
+
+months.Date(b_as_date) # extracts month from the object of class Date
+```
+## Dataframes
+
+Dataframes are typical tabular data you have seen in spreadsheets, documents, and other places. 
+
+```{r, collapse=TRUE}
+# downloading data on E-ZPass Retailers Locations from NY Open Data portal using web link (URL)
+df1 <- read.csv("https://data.ny.gov/api/views/y59h-w6v4/rows.csv?accessType=DOWNLOAD&sorting=true")
+head(df1)
+```
+
+We can also create dataframes. 
+
+```{r, collapse=TRUE}
+p.height <- c(180, 155, 160, 167, 181)
+p.weight <- c(65, 50, 52, 58, 70)
+p.names <- c("Joanna", "Charlotte", "Helen", "Karen", "Amy")
+
+dataf <- data.frame(height = p.height, weight = p.weight, names = p.names)
+dataf
+```
+
+We have data with 5 rows and 3 columns. The three columns are variables that describe data about 5 different persons.
+
+Fist step in analysis when you get given a data is trying to understand the data.
+
+```{r}
+dim(dataf) # provides numbers of rows and columns
+
+str(dataf) #provides more information about rows, columns and data types
+```
+
+## Packages to work with data
+R, or sometimes called base R provides many useful functions to analyze data. Various software developers add to the capability of R by developing functions on top of base R, making the R ecosystem more powerful. These additional functionalities are parts of what we know as packages. People have developed packages for data analysis, visualization, statistical analysis, and many more purposes. 
+
+## Analyzing data using the Tidyverse framework
+
+### Tidyverse as a collection of packages
+
+The tidyverse is a collection of related R packages developed to streamline data management, munging and analysis in R. The core tidyverse packages include ggplot2, dplyr, tidyr, lubridate, readr, purrr, tibble, stringr, and forcats. These packages help perform various data analyses tasks more easily and intuitively than the base R functions would allow. 
+
+Install the tidyverse package by typing the following in your console and hitting Enter.
+
+install.packages("tidyverse")
+
+This will install the aforementioned packages as well.
+
+
+### Tidyverse as a framework for data analysis
+
+The tidyverse is more than just a collection of packages. It's an approach that makes data analysis easier to perform and to understand. 
+
+Data is stored as tibbles, an analog of data frames in base R. We will use Tidyverse functions for basic data wrangling in this tutorial. 
+
+![Tidy framework](https://r4ds.hadley.nz/diagrams/data-science/base.png)
+
+First, data is imported into R.
+
+Tidy means storing data such that each column is a variable and each row is an observation. Consistent structure makes data analysis easier to follow.
+
+![Tidy dataset](https://r4ds.hadley.nz/images/tidy-1.png)
+
+Transform: Selecting the slice of data you need, creating new variables (e.g extracting months from dates), etc.
+
+Visualization is a process of representing data visually for better understanding.
+
+Model: Model refers to mathematical models that will be useful in tasks such as statistical analysis or machine learning.
+
+Communication refers to conveying your insights to your audience.
+
+### Reading external data
+
+```{r, collapse=TRUE}
+library(tidyverse)
+df_ny <- read_csv("retailers_locations.csv")
+head(df_ny)
+```
+
+Remember the function you used earlier is read.csv() - a base R function. The tidyverse equivalent is read_csv(). Both provide similar results. 
+
+You notice that the data classes don't make complete sense. 
+
+<dbl> means double, or decimals. However, Zip codes don't have decimals. We can change to right type. 
+
+```{r, collapse=TRUE}
+df_ny <- read_csv("retailers_locations.csv",
+                  col_types = cols(
+                    `Zip Code` = col_factor()
+                  )
+                ) 
+class(df_ny$`Zip Code`)
+```
+Another thing you notice is that the column names are really bad.
+
+Some good practices for column names include:
+
+* Use snake case (column_names) or camel case (columnNames)
+* Do not use space (column names)
+* Do not use numbers at the beginning (e.g. 1columnName)
+
+### Changing column names
+
+```{r, collapse=TRUE}
+colnames(df_ny)
+```
+
+```{r, collapse=TRUE}
+df_ny <- df_ny |>
+  rename(company = Company,
+         street_1 = `Street 1`,
+         street_2 = `Street 2`,
+         city = City,
+         state = State,
+         zip_code = `Zip Code`,
+         georeference = Georeference)
+
+colnames(df_ny)
+```
+## Wrangling data
+
+Data wrangling involves cleaning, transforming, and organizing data so it's easier to analyze. It involves processes like cleaning names, merging datasets, filtering only the required portion of data, grouping data, etc.
+
+We already started wrangling data when we cleaned the column names. 
+
+### Keep what you need: select and filter
+
+Select columns necessary for analysis
+
+```{r, collapse=TRUE}
+# select keeps the columns we want
+df_ny_selected <- df_ny |>
+  select(company, city, state, zip_code)
+
+colnames(df_ny_selected)
+```
+
+Filter observations you are interested in
+
+```{r, collapse=TRUE}
+# filter keeps the rows we want 
+df_filtered <- df_ny_selected |> 
+  filter(city == "BROOKLYN")
+
+head(df_filtered)
+```
+
+Combine conditions for filtering
+
+```{r, collapse=TRUE}
+df_filtered2 <- df_ny_selected %>% 
+  filter(company == "COMMUNITY FINANCIAL SERVICE CENTERS" & zip_code == "11206")
+
+head(df_filtered2)
+```
+
+## Change values of columns: mutate
+
+Mutate lets us change values of a column, or create new columns based on values of one or more columns. 
+
+Let's import a new dataset on air quality in North Carolina.
+
+```{r, collapse=TRUE}
+aq_df <- read_csv("https://raw.githubusercontent.com/nkaza/intro2Rbook/master/data/NC_AQI_data.csv")
+head(aq_df)
+```
+
+We can create a new column of Month using the date_2020 column values. Notice the sequence of operations using "|>" operator. The operator is called pipe, and this sequence using pipes is called chaining.
+
+```{r, collapse=TRUE}
+library(lubridate)
+aq_df1 <- aq_df |>
+  mutate(date_2020 = as.Date(date_2020)) |> #converting chr class to Date class
+  mutate(month = month(date_2020)) |> # using month() from lubridate package
+  select(date_2020, month) |> # selecting necessary columns only
+  na.omit() # removes NA values from the dataframe
+
+head(aq_df1)
+```
+
+Exercise: Use mutate() to create a new column called temp_c that is value of temperature in degree Celsius. Note: the values in temperature column are in Fahrenheit.
+
+# Grouping and summarizing data
+
+What if we wanted to figure out monthly average temperature?
+
+```{r}
+monthly_aq <- aq_df |>
+  mutate(date_2020 = as.Date(date_2020)) |> #converting chr class to Date class
+  mutate(month = month(date_2020)) |> # using month() from lubridate package
+  group_by(month) |> 
+  na.omit() |>
+  summarise(avg_temp = mean(temperature))
+
+head(monthly_aq)
+```
+Exercise: Try grouping by two variables, month and ID (represents different sensors), and summarize by mean of average temperature and median of air quality.

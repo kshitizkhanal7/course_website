@@ -1,0 +1,281 @@
+---
+title: "Data wrangling (continued)"
+format: html
+editor: visual
+---
+
+## Functions
+
+You have already used several functions. mutate(), mean(), summarize(), etc. are all functions developed for base R or other specific packages like tidyverse. Functions simplify analytics process by making code more readable and concise.
+
+We can develop our own functions in R. Functions are particularly useful when we need to do the same operation multiple times. Instead of copying and pasting code every time we repeat an operation, we can write a function. 
+
+From :
+Writing a function has three big advantages over using copy-and-paste (R for Data Science, 2e):
+
+1. You can give a function an evocative name that makes your code easier to understand.
+2. As requirements change, you only need to update code in one place, instead of many.
+3. You eliminate the chance of making incidental mistakes when you copy and paste (i.e. updating a variable name in one place, but not in another).
+4. It makes it easier to reuse work from project-to-project, increasing your productivity over time.
+
+### A simple example of a function
+
+Suppose we want to create a function that takes a number as input, and returns the square of that number as output. Here's how we would write the function in R.
+
+```{r, collapse=TRUE}
+get_squared <- function(num) {
+  return (num * num)
+}
+
+get_squared(5)
+get_squared(10)
+```
+Explanation:
+
+* get_squared is the name of the function. It should ideally tell us what the function does concisely and follow good variable naming practices we discussed earlier.
+
+* function() is the syntax to create functions. 
+
+* num is a input to the function. Function inputs are called parameters. 
+
+* return specifies what the function returns as output. Not all functions have return statements, we will deal with them later in the course. 
+
+* to use the function, we write function name with inputs within the brackets as we did for get_squared(5)
+
+### Using a function to mutate column values
+
+We will work on a data of sports arenas
+
+```{r, collapse=TRUE, message=FALSE}
+library(tidyverse)
+
+sport <- c("soccer", "football", "baseball", "basketball", "hockey", "tennis")
+length <- c(100, 120, 90, 94, 200, 78)
+width <- c(64, 53.3, 27, 50, 85, 36)
+field_df <- data.frame(sport, length, width)
+field_df
+
+#define a function to calculate area
+area_field <- function (length, width) {
+  return (length * width)
+}
+
+# use mutate to create a new column using the area_field function
+field_df <- field_df %>% 
+  mutate(area = area_field(length, width))
+
+head(field_df)
+```
+
+::: {.callout-note icon=false}
+
+## Exercise 
+
+Create dummy data of four places and temperatures (in Fahrenheit). Create a function to convert Fahrenheit temperature to Celsius. Use that function to create a new column of temperature in degree Celsius in your dummy data frame.
+
+:::
+
+
+
+## Conditionals: if_else
+If else conditionals help us operate on data based on certain conditions. Take for example your grades. Your grades are conditioned on your scores and criteria for grading that your instructor sets. 
+
+```{r, collapse=TRUE}
+library(tidyverse)
+
+# create dummy dataset
+students <- tibble(
+  name = c("AB", "CS", "ST", "KK", "UB", "RW"),
+  score = c(75, 85, 90, 60, 80, 95)
+)
+
+```
+
+
+#### Creating new columns with if_else conditions
+
+```{r, collapse=TRUE}
+students <- students %>% 
+  mutate(result = if_else(score >= 70, "Pass", "Fail"))
+
+students
+```
+
+Anatomy of if_else:
+
+* if_else if a tidyverse function. The base R equivalent is ifelse
+* there are three components inside the bracket:
+
+    * score>=70 sets a criteria
+    * "Pass" is the value of the new column if the criteria is True
+    * "Fail" is the value of the new column if the criteria is False
+
+#### Adding multiple conditions
+
+```{r, collapse=TRUE}
+students <- students %>% 
+  mutate(
+    grade = case_when(
+      score >= 90 ~ "A",
+      score >= 80 ~ "B",
+      score >= 70 ~ "C",
+      score >= 60 ~ "D",
+      TRUE ~ "F"
+    )
+  )
+
+students
+```
+
+if_else is useful when we have only one condition that can be True or False. When we have multiple possible outputs for different conditions, we can use case_when.
+
+Exercise: I wrote a process to generate dummy data of customers of an imaginary store based on the following code.  
+
+```{r, collapse=TRUE}
+# create dummy data
+set.seed(123) #ensures reproducibility
+
+customer <- paste0("Customer", 1:10)
+age <- sample(18:65, 10, replace = TRUE)
+gender <- sample(c("Male", "Female"), 10, replace = TRUE)
+income <- sample(25000:100000, 10, replace = TRUE)
+spending_2020 <- sample(1000:5000, 10, replace = TRUE)
+spending_2021 <- sample(1000:5000, 10, replace = TRUE)
+
+# combine into a data frame
+customer_data <- data.frame(customer, age, gender, income, spending_2020, spending_2021)
+
+# view data frame
+customer_data
+```
+
+Perform the following:
+
+* Create a new variable called Total spending that is the sum of spending in 2020 and 2021
+* Use an ifelse() statement and the mutate() function to create a new variable called Frequent shopper that is equal to "Yes" if a customer's total spending is greater than $5000, and "No" otherwise.
+* Use the group_by() and summarise() functions to calculate the total number of frequent shoppers by different age groups. Create three age groups based on your own judgment.
+
+## Joining different datasets
+It is rare that we will be do most of our analysis using a single dataset. We usually need to combine multiple datasets to seek valuable insights. The process of combining the datasets are known as "joins." There are various types of joins, but we will focus on the two most commonly used joins in this tutorial.
+
+We will get data on population in North Carolina counties from ACS and area of different counties from TIGRIS. We will combine those datasets to be able to estimate population density in those counties.
+
+
+```{r, collapse=TRUE}
+#install.packages("tidycensus")
+library(tidycensus)
+
+# gets latest ACS data
+nc_counties_pop <- get_acs(
+  geography = "county", 
+  variables = "B01003_001",
+  state = "NC") |>
+  rename(population = estimate) |>
+  select(-variable, -moe)
+
+head(nc_counties_pop)
+```
+
+```{r, message=FALSE, warning=FALSE}
+#install.packages("tigris")
+library(tigris)
+options(tigris_use_cache = TRUE)
+
+nc_counties_area <- counties(state = "NC", cb = TRUE) %>% 
+  mutate(area = ALAND + AWATER) %>% 
+  select(GEOID, area)
+```
+
+
+```{r, message=FALSE, collapse=TRUE, warning=FALSE}
+head(nc_counties_area) 
+```
+We can see that there is a common "GEOID" column that we can use to join the dataset. 
+
+There are few different joins we can use for these datasets.
+
+```{r, collapse=TRUE}
+nc_counties <- inner_join(nc_counties_area, nc_counties_pop)
+head(nc_counties)
+```
+
+It joins the latter dataset (nc_counties_pop) to the nc_counties_area dataset. Since the name of the common variable (GEOID) is same between both datasets, it automatically joins by that variable.
+
+The better practice is to make the common variable explicit, in case there are multiple common variables. 
+
+```{r, collapse=TRUE}
+nc_counties2 <- inner_join(nc_counties_area, nc_counties_pop, by = "GEOID")
+head(nc_counties2)
+```
+
+Does it produce the same results?
+
+```{r, collapse=TRUE}
+head(nc_counties == nc_counties2)
+```
+
+Inner join only returns rows when there is a match. 
+
+We can use left join when we want all observations of the dataset on the left side, and only the matching observations on the dataset on the right side.
+
+```{r, collapse=TRUE, collapse=TRUE}
+nc_counties3 <- left_join(nc_counties_area, nc_counties_pop, by = "GEOID")
+head(nc_counties3)
+
+head(nc_counties == nc_counties3)
+```
+In this case, we have all observations matching between the two datasets. Let's remove 5 observations from the left dataset, and check if that makes any difference. 
+
+
+```{r, collapse=TRUE}
+nc_counties_area_short <- nc_counties_area |> 
+  slice(1:95)
+
+nc_counties4 <- left_join(nc_counties_area, nc_counties_pop, by = "GEOID")
+
+nrow(nc_counties4)
+
+nc_counties5 <- left_join(nc_counties_area_short, nc_counties_pop, by = "GEOID")
+
+nrow(nc_counties5)
+```
+For the final operation, we only have 95 counties in the table with area. With left join, now we only have 95 rows in the final table.
+
+Is there a right join? What does it do?
+
+```{r, collapse=TRUE}
+nc_counties6 <- right_join(nc_counties_area_short, nc_counties_pop, by = "GEOID")
+
+nrow(nc_counties6)
+```
+Now, we have all observations in the right dataset and only matching observations from the left dataset, which is why we have 100 observations in the final dataset.
+
+We will deal with other types of joins later when we need them. Inner joins and left joins are the most commonly used joins. 
+
+Exercise: Using the following tibbles, create inner join between city_population and city_area datasets. Which observations are left out? Create right join between city_density and city employment. Which observations are left out? Write your reflections in a few sentences.
+
+```{r, collapse=TRUE}
+city_population <- tibble(
+  city = c("New York", "Los Angeles", "Chicago", "Houston", "Philadelphia"),
+  population = c(8398748, 3990456, 2705994, 2325502, 1567442)
+)
+
+city_area <- tibble(
+  city = c("New York", "Los Angeles", "Chicago", "Dallas", "Phoenix", "Philadelphia"),
+  area = c(468.9, 1302.0, 227.3, 882.9, 1339.6, 347.6)
+)
+
+city_density <- tibble(
+  city = c("New York", "Los Angeles", "Chicago", "Houston", "Dallas", "Phoenix", "Philadelphia"),
+  density = c(17888, 3072, 11907, 2632, 2635, 1207, 4508)
+)
+
+city_employment <- tibble(
+  city = c("New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "San Antonio"),
+  employment_rate = c(57.1, 51.2, 52.3, 61.2, 50.1, 59.8)
+)
+```
+
+
+
+

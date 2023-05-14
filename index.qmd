@@ -2,5 +2,4 @@
 title: "PLAN372 Intro to Urban Data Analytics"
 ---
 
-This is the home for tutorials of the course.
-
+![](poster.jpg){width=45%}

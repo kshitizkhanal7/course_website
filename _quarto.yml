@@ -12,7 +12,8 @@ website:
       - first_tutorial.qmd
       - basic_data_wrangling.qmd
       - data_wrangling_continued.qmd
-
+      - exploratory_analysis.qmd
+      
 format:
   html:
     theme:

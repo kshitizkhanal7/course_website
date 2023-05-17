@@ -13,7 +13,16 @@ editor: visual
 ```{r, collapse=TRUE}
 2+2
 ```
-#### Exercise: Using regular mathematical symbols (+, -, /, and *), try more complex calculations.
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+Using regular mathematical symbols (+, -, /, and \*), try more complex calculations.
+
+:::
+
+
 
 ### Other mathematical functions
 
@@ -30,11 +39,12 @@ sqrt(4)             # square root
 
 pi                  # not a function but useful
 ```
+
 ### Creating, naming, and manipulating objects
 
-Everything we create or manipulate using R is an object. It can range from a character "a", a number (1), a dataset, an image, a function, and more. Essentially, all data analysis involves creating and manipulating objects. 
+Everything we create or manipulate using R is an object. It can range from a character "a", a number (1), a dataset, an image, a function, and more. Essentially, all data analysis involves creating and manipulating objects.
 
-We use the assignment operator <- to create objects and assign those to object names. 
+We use the assignment operator \<- to create objects and assign those to object names.
 
 For example,
 
@@ -61,6 +71,7 @@ b <- 10
 
 (a + b) ^ 2
 ```
+
 Objects that are often known as strings in programming (e.g. words, phrases, etc.) are assigned slightly differently.
 
 ```{r, collapse=TRUE}
@@ -74,11 +85,17 @@ string2
 string3 <- paste0(string1, " ", string2)
 string3
 ```
-#### Naming objects (in slides)
+
+#### Naming objects
+
+* camelCase or underscores only. Example: thisNewVariable, this_new_variable
+* no numbers in the beginning (not 1_alpha but alpha_1 is good)
+* variable should sufficiently represent what it's about but be concise (for exampple, energy_df is preferable to energy_consumption_estimation_data_frame)
+
 
 ### Working with data
 
-#### Creating a list of numbers 
+#### Creating a list of numbers
 
 c() joins (concatenates) the numbers from one to five to create a vector. A vector in R is essentially a data type that stores numbers or strings.
 
@@ -91,6 +108,7 @@ my_vector <- c(1, 2, 3, 4, 5)
 another_vector <- 1:5
 my_vector == another_vector
 ```
+
 ```{r, collapse=TRUE}
 my_vec <- c(2, 3, 1, 6, 4, 3, 3, 7)
 
@@ -99,11 +117,17 @@ mean(my_vec)
 length(my_vec)
 ```
 
-##### Exercise: 
+
+::: {.callout-note icon=false}
+
+## Exercise:
 
 It's almost impossible to remember all programming syntax we need. A skill to develop is to find where to look for syntax when you need. You can refer to documentation, online resources like tutorials or books, or in your Integrated Development Environment (here, RStudio).
 
 Use a search engine (e.g. Google) to find out how you can calculate the standard deviation of "my_vec" in R.
+
+:::
+
 
 #### Extracting values from vectors
 
@@ -141,7 +165,7 @@ my_vec
 
 ##### Vectorization
 
-We can apply an operation to all elements of the vectors at the same time. This is known as vectroization, and is very useful in data analysis.
+We can apply an operation to all elements of the vectors at the same time. This is known as vectorization, and is very useful in data analysis to make the code more concise and readable.
 
 ```{r}
 # create a vector
@@ -177,7 +201,7 @@ rev_vec
 
 ##### Missing data
 
-NA or not available is a common symbol to represent missingness in R.
+NA or not available is a common symbol to represent missingness in R. Missingness is when we don't have information but there is space for that information.
 
 ```{r}
 temp  <- c(7.2, NA, 7.1, 6.9, 6.5, 5.8, 5.8, 5.5, NA, 5.5)
@@ -194,7 +218,6 @@ It resulted in NA as mean because mathematical operations cannot be performed wi
 mean_temp <- mean(temp, na.rm = TRUE)
 mean_temp
 ```
-
 
 ### Importing data from csv files
 
@@ -214,6 +237,7 @@ head(df2)
 ```
 
 ### Add image in markdown document
+
 Copy the code between the inverted commas in the markdown document, not in the code chunk!
 
 ```{r}
@@ -222,12 +246,17 @@ Copy the code between the inverted commas in the markdown document, not in the c
 "
 ```
 
-
 ![R logo](https://www.r-project.org/Rlogo.png)
 
-### Exercise: Download an image from the internet into your project directory. Embed that to the markdown.
+::: {.callout-note icon=false}
+
+## Exercise: 
+
+Download an image from the internet into your project directory. Embed that to the markdown.
+
+:::
+
 
 ## Lab submission
 
 To submit the lab, zip qmd file, html file, and the folder that has contents for html files into a single zipped folder and submit as your lab.
-

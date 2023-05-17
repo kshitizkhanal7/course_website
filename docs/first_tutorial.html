@@ -203,7 +203,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#working-with-data" id="toc-working-with-data" class="nav-link" data-scroll-target="#working-with-data">Working with data</a></li>
   <li><a href="#importing-data-from-csv-files" id="toc-importing-data-from-csv-files" class="nav-link" data-scroll-target="#importing-data-from-csv-files">Importing data from csv files</a></li>
   <li><a href="#add-image-in-markdown-document" id="toc-add-image-in-markdown-document" class="nav-link" data-scroll-target="#add-image-in-markdown-document">Add image in markdown document</a></li>
-  <li><a href="#exercise-download-an-image-from-the-internet-into-your-project-directory.-embed-that-to-the-markdown." id="toc-exercise-download-an-image-from-the-internet-into-your-project-directory.-embed-that-to-the-markdown." class="nav-link" data-scroll-target="#exercise-download-an-image-from-the-internet-into-your-project-directory.-embed-that-to-the-markdown.">Exercise: Download an image from the internet into your project directory. Embed that to the markdown.</a></li>
   </ul></li>
   <li><a href="#lab-submission" id="toc-lab-submission" class="nav-link" data-scroll-target="#lab-submission">Lab submission</a></li>
   </ul>
@@ -239,9 +238,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">+</span><span class="dv">2</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="exercise-using-regular-mathematical-symbols---and-try-more-complex-calculations." class="level4">
-<h4 class="anchored" data-anchor-id="exercise-using-regular-mathematical-symbols---and-try-more-complex-calculations.">Exercise: Using regular mathematical symbols (+, -, /, and *), try more complex calculations.</h4>
-</section>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using regular mathematical symbols (+, -, /, and *), try more complex calculations.</p>
+</div>
+</div>
 </section>
 <section id="other-mathematical-functions" class="level3">
 <h3 class="anchored" data-anchor-id="other-mathematical-functions">Other mathematical functions</h3>
@@ -307,8 +316,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>string3</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "this is a string this is another string"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="naming-objects-in-slides" class="level4">
-<h4 class="anchored" data-anchor-id="naming-objects-in-slides">Naming objects (in slides)</h4>
+<section id="naming-objects" class="level4">
+<h4 class="anchored" data-anchor-id="naming-objects">Naming objects</h4>
+<ul>
+<li>camelCase or underscores only. Example: thisNewVariable, this_new_variable</li>
+<li>no numbers in the beginning (not 1_alpha but alpha_1 is good)</li>
+<li>variable should sufficiently represent what it’s about but be concise (for exampple, energy_df is preferable to energy_consumption_estimation_data_frame)</li>
+</ul>
 </section>
 </section>
 <section id="working-with-data" class="level3">
@@ -333,11 +347,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(my_vec)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="exercise" class="level5">
-<h5 class="anchored" data-anchor-id="exercise">Exercise:</h5>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise:
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>It’s almost impossible to remember all programming syntax we need. A skill to develop is to find where to look for syntax when you need. You can refer to documentation, online resources like tutorials or books, or in your Integrated Development Environment (here, RStudio).</p>
 <p>Use a search engine (e.g.&nbsp;Google) to find out how you can calculate the standard deviation of “my_vec” in R.</p>
-</section>
+</div>
+</div>
 </section>
 <section id="extracting-values-from-vectors" class="level4">
 <h4 class="anchored" data-anchor-id="extracting-values-from-vectors">Extracting values from vectors</h4>
@@ -392,7 +415,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="vectorization" class="level5">
 <h5 class="anchored" data-anchor-id="vectorization">Vectorization</h5>
-<p>We can apply an operation to all elements of the vectors at the same time. This is known as vectroization, and is very useful in data analysis.</p>
+<p>We can apply an operation to all elements of the vectors at the same time. This is known as vectorization, and is very useful in data analysis to make the code more concise and readable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>my_vec2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">20</span>)</span>
@@ -439,7 +462,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="missing-data" class="level5">
 <h5 class="anchored" data-anchor-id="missing-data">Missing data</h5>
-<p>NA or not available is a common symbol to represent missingness in R.</p>
+<p>NA or not available is a common symbol to represent missingness in R. Missingness is when we don’t have information but there is space for that information.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>temp  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">7.2</span>, <span class="cn">NA</span>, <span class="fl">7.1</span>, <span class="fl">6.9</span>, <span class="fl">6.5</span>, <span class="fl">5.8</span>, <span class="fl">5.8</span>, <span class="fl">5.5</span>, <span class="cn">NA</span>, <span class="fl">5.5</span>)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -527,9 +550,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p></p><figcaption class="figure-caption">R logo</figcaption><p></p>
 </figure>
 </div>
-</section>
-<section id="exercise-download-an-image-from-the-internet-into-your-project-directory.-embed-that-to-the-markdown." class="level3">
-<h3 class="anchored" data-anchor-id="exercise-download-an-image-from-the-internet-into-your-project-directory.-embed-that-to-the-markdown.">Exercise: Download an image from the internet into your project directory. Embed that to the markdown.</h3>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Download an image from the internet into your project directory. Embed that to the markdown.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="lab-submission" class="level2">

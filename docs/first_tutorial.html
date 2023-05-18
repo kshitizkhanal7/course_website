@@ -202,8 +202,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#creating-naming-and-manipulating-objects" id="toc-creating-naming-and-manipulating-objects" class="nav-link" data-scroll-target="#creating-naming-and-manipulating-objects">Creating, naming, and manipulating objects</a></li>
   <li><a href="#working-with-data" id="toc-working-with-data" class="nav-link" data-scroll-target="#working-with-data">Working with data</a></li>
   <li><a href="#importing-data-from-csv-files" id="toc-importing-data-from-csv-files" class="nav-link" data-scroll-target="#importing-data-from-csv-files">Importing data from csv files</a></li>
+  <li><a href="#accessing-columns" id="toc-accessing-columns" class="nav-link" data-scroll-target="#accessing-columns">Accessing columns</a></li>
   <li><a href="#add-image-in-markdown-document" id="toc-add-image-in-markdown-document" class="nav-link" data-scroll-target="#add-image-in-markdown-document">Add image in markdown document</a></li>
   </ul></li>
+  <li><a href="#writing-better-markdown" id="toc-writing-better-markdown" class="nav-link" data-scroll-target="#writing-better-markdown">Writing better markdown</a></li>
   <li><a href="#lab-submission" id="toc-lab-submission" class="nav-link" data-scroll-target="#lab-submission">Lab submission</a></li>
   </ul>
 </nav>
@@ -248,7 +250,9 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Using regular mathematical symbols (+, -, /, and *), try more complex calculations.</p>
+<ul>
+<li>Using regular mathematical symbols (+, -, /, and *), try more complex calculations.</li>
+</ul>
 </div>
 </div>
 </section>
@@ -277,10 +281,17 @@ Exercise
 <section id="creating-naming-and-manipulating-objects" class="level3">
 <h3 class="anchored" data-anchor-id="creating-naming-and-manipulating-objects">Creating, naming, and manipulating objects</h3>
 <p>Everything we create or manipulate using R is an object. It can range from a character “a”, a number (1), a dataset, an image, a function, and more. Essentially, all data analysis involves creating and manipulating objects.</p>
-<p>We use the assignment operator &lt;- to create objects and assign those to object names.</p>
+<p>We use the assignment operator <code>&lt;-</code> to create objects and assign those to object names.</p>
+<p>We can also use the <code>=</code> operator, but it’s customary to use <code>&lt;-</code>. For this course, I will use <code>&lt;-</code> but feel free to use <code>=</code>.</p>
 <p>For example,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We created an object “a” with value 5. On the top right side of RStudio, you can see a in your “Environment.”</p>
 <p>Now we can perform mathematical operation by manipulating the object a.</p>
@@ -533,13 +544,215 @@ Exercise:
 </div>
 </div>
 </section>
+<section id="accessing-columns" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-columns">Accessing columns</h3>
+<p>We can use the $ sign to access specific columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df2<span class="sc">$</span>Company</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "DMV-HARLEM MVO"                       
+  [2] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+  [3] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+  [4] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+  [5] "NYC TRANSIT MUSEUM SHOP"              
+  [6] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+  [7] "DMV-BETHPAGE MVO"                     
+  [8] "DMV-LOWER MANHATTAN GREENWICH MVO"    
+  [9] "CHECK TIME"                           
+ [10] "AAA FARMINGDALE"                      
+ [11] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [12] "AAA BRANFORD"                         
+ [13] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [14] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [15] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [16] "ACTION CHECK CASHING"                 
+ [17] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [18] "ACTION CHECK CASHING"                 
+ [19] "RITECHECK CASHING"                    
+ [20] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [21] "AAA EAST MEADOW"                      
+ [22] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [23] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [24] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [25] "RITECHECK CASHING"                    
+ [26] "CHECK TIME"                           
+ [27] "AAA STAMFORD"                         
+ [28] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [29] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [30] "RITECHECK CASHING"                    
+ [31] "NYC TRANSIT MUSEUM SHOP-BROOKLYN"     
+ [32] "DMV-HAUPPAUGE MVO"                    
+ [33] "CHECK TIME"                           
+ [34] "RITECHECK CASHING"                    
+ [35] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [36] "DMV-COLLEGE POINT MVO"                
+ [37] "RITECHECK CASHING"                    
+ [38] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [39] "DMV-BROOKLYN MVO &amp; LIC CTR"           
+ [40] "DMV-MEDFORD MVO"                      
+ [41] "THE CHECK CASHING STORE"              
+ [42] "AAA SMITHTOWN"                        
+ [43] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [44] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [45] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [46] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [47] "AAA BROOKLYN"                         
+ [48] "AAA FAIRFIELD"                        
+ [49] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [50] "RITECHECK CASHING"                    
+ [51] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [52] "FLATLANDS CHECK CASHING"              
+ [53] "DMV-SPRINGFIELD GARDENS MVO"          
+ [54] "CHECK CHANGERS"                       
+ [55] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [56] "AAA MILFORD"                          
+ [57] "ACTION CHECK CASHING"                 
+ [58] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [59] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [60] "AAA WATERBURY"                        
+ [61] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [62] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [63] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [64] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [65] "AAA GARDEN CITY"                      
+ [66] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [67] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [68] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [69] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [70] "AAA MANHATTAN"                        
+ [71] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [72] "WEGMAN'S SUPERMARKET"                 
+ [73] "DMV-MIDTOWN MANHATTAN MVO"            
+ [74] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [75] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [76] "DMV-BRONX MVO"                        
+ [77] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [78] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [79] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [80] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [81] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [82] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [83] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [84] "DMV-HUNTINGTON MVO"                   
+ [85] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [86] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [87] "ACTION CHECK CASHING"                 
+ [88] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [89] "DMV-BRONX LICENSING CENTER"           
+ [90] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [91] "RITECHECK CASHING"                    
+ [92] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [93] "AAA HAMDEN"                           
+ [94] "RITECHECK CASHING"                    
+ [95] "DMV-MASSAPEQUA MVO"                   
+ [96] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+ [97] "DMV-GARDEN CITY MVO"                  
+ [98] "CHECK CHANGERS"                       
+ [99] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[100] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[101] "RITECHECK CASHING"                    
+[102] "RITECHECK CASHING"                    
+[103] "CHECK CHANGERS"                       
+[104] "M&amp;B CHECK CASHING"                    
+[105] "RITECHECK CASHING"                    
+[106] "DMV-PORT JEFFERSON MVO"               
+[107] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[108] "DMV-RICHMOND MVO"                     
+[109] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[110] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[111] "DMV-CONEY ISLAND MVO"                 
+[112] "DMV-RIVERHEAD MVO"                    
+[113] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[114] "AAA DANBURY"                          
+[115] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[116] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[117] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[118] "DMV-JAMAICA MVO"                      
+[119] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[120] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[121] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[122] "NYC TRANSIT MUSEUM SHOP-GRAND CENTRAL"
+[123] "RITECHECK CASHING"                    
+[124] "RITECHECK CASHING"                    
+[125] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[126] "CHECK CHANGERS"                       
+[127] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[128] "CHECK TIME"                           
+[129] "AAA NORWALK"                          
+[130] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[131] "CHECK TIME"                           
+[132] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[133] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[134] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[135] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[136] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[137] "DMV-PENN PLAZA LICENSE EXPRESS"       
+[138] "CHECK CHANGERS"                       
+[139] "CHECK CHANGERS"                       
+[140] "AAA QUEENS"                           
+[141] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[142] "BAYCHESTER PAYMENT CENTER"            
+[143] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[144] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[145] "QUEENS CHECK CASHING"                 
+[146] "COMMUNITY FINANCIAL SERVICE CENTERS"  
+[147] "RITECHECK CASHING"                    
+[148] "COMMUNITY FINANCIAL SERVICE CENTERS"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df2<span class="sc">$</span>City) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "NEW YORK" "BROOKLYN" "NEW YORK" "BROOKLYN" "NEW YORK" "BRONX"   </code></pre>
+</div>
+</div>
+<p>We can also use the column number</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df2[, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "159 EAST 125TH STREET" "112 TOMPKINS AVENUE"   "1629 LEXINGTON AVENUE"
+[4] "523 FLUSHING VENUE"    "2 BROADWAY"            "677 ALLERTON AVENUE"  </code></pre>
+</div>
+</div>
+<p>This accesses the second column.</p>
+<p>Breaking down df2[ , 2]: Inside the square bracket we can mention rows and columns we want to select. dataftame[rows, columns]. Here the value for columns is 2, so second column is selected. There is no value for row, so all rows are selected.</p>
+<p>If we wanted to access the first 10 rows and first 3 columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df2[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                               Company                Street.1  Street.2
+1                       DMV-HARLEM MVO   159 EAST 125TH STREET 3RD FLOOR
+2  COMMUNITY FINANCIAL SERVICE CENTERS     112 TOMPKINS AVENUE          
+3  COMMUNITY FINANCIAL SERVICE CENTERS   1629 LEXINGTON AVENUE          
+4  COMMUNITY FINANCIAL SERVICE CENTERS      523 FLUSHING VENUE          
+5              NYC TRANSIT MUSEUM SHOP              2 BROADWAY          
+6  COMMUNITY FINANCIAL SERVICE CENTERS     677 ALLERTON AVENUE          
+7                     DMV-BETHPAGE MVO 4031 HEMPSTEAD TURNPIKE          
+8    DMV-LOWER MANHATTAN GREENWICH MVO     11 GREENWICH STREET          
+9                           CHECK TIME           2966 AVENUE U          
+10                     AAA FARMINGDALE    915 BROADHOLLOW ROAD          </code></pre>
+</div>
+</div>
+<p>We know how the colon sign works from the part on vectors.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Subset the third to ninth rows and the second and third columns.</p>
+</div>
+</div>
+</section>
 <section id="add-image-in-markdown-document" class="level3">
 <h3 class="anchored" data-anchor-id="add-image-in-markdown-document">Add image in markdown document</h3>
 <p>Copy the code between the inverted commas in the markdown document, not in the code chunk!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="st">![R logo](https://www.r-project.org/Rlogo.png)</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="st">![R logo](https://www.r-project.org/Rlogo.png)</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "\n![R logo](https://www.r-project.org/Rlogo.png)\n"</code></pre>
 </div>
@@ -564,6 +777,28 @@ Exercise:
 </div>
 </div>
 </section>
+</section>
+<section id="writing-better-markdown" class="level2">
+<h2 class="anchored" data-anchor-id="writing-better-markdown">Writing better markdown</h2>
+<p>Markdown allows you to write aesthetic documents by following simple rules.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Refer to <a href="https://quarto.org/docs/authoring/markdown-basics.html">markdown basics documentation</a> and try the following:</p>
+<ul>
+<li>Insert one link</li>
+<li>Insert one list</li>
+<li>Insert text in bold and italics</li>
+</ul>
+</div>
+</div>
 </section>
 <section id="lab-submission" class="level2">
 <h2 class="anchored" data-anchor-id="lab-submission">Lab submission</h2>

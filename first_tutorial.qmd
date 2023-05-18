@@ -14,15 +14,12 @@ editor: visual
 2+2
 ```
 
-::: {.callout-note icon=false}
-
+::: {.callout-note icon="false"}
 ## Exercise
 
-Using regular mathematical symbols (+, -, /, and \*), try more complex calculations.
+* Using regular mathematical symbols (+, -, /, and \*), try more complex calculations.
 
 :::
-
-
 
 ### Other mathematical functions
 
@@ -44,12 +41,18 @@ pi                  # not a function but useful
 
 Everything we create or manipulate using R is an object. It can range from a character "a", a number (1), a dataset, an image, a function, and more. Essentially, all data analysis involves creating and manipulating objects.
 
-We use the assignment operator \<- to create objects and assign those to object names.
+We use the assignment operator `<-` to create objects and assign those to object names.
+
+We can also use the `=` operator, but it's customary to use `<-`. For this course, I will use `<-` but feel free to use `=`. 
 
 For example,
 
 ```{r, collapse=TRUE}
 a <- 5
+a
+
+x = 5
+x
 ```
 
 We created an object "a" with value 5. On the top right side of RStudio, you can see a in your "Environment."
@@ -88,10 +91,9 @@ string3
 
 #### Naming objects
 
-* camelCase or underscores only. Example: thisNewVariable, this_new_variable
-* no numbers in the beginning (not 1_alpha but alpha_1 is good)
-* variable should sufficiently represent what it's about but be concise (for exampple, energy_df is preferable to energy_consumption_estimation_data_frame)
-
+-   camelCase or underscores only. Example: thisNewVariable, this_new_variable
+-   no numbers in the beginning (not 1_alpha but alpha_1 is good)
+-   variable should sufficiently represent what it's about but be concise (for exampple, energy_df is preferable to energy_consumption_estimation_data_frame)
 
 ### Working with data
 
@@ -117,17 +119,13 @@ mean(my_vec)
 length(my_vec)
 ```
 
-
-::: {.callout-note icon=false}
-
+::: {.callout-note icon="false"}
 ## Exercise:
 
 It's almost impossible to remember all programming syntax we need. A skill to develop is to find where to look for syntax when you need. You can refer to documentation, online resources like tutorials or books, or in your Integrated Development Environment (here, RStudio).
 
 Use a search engine (e.g. Google) to find out how you can calculate the standard deviation of "my_vec" in R.
-
 :::
-
 
 #### Extracting values from vectors
 
@@ -236,6 +234,40 @@ df2 <- read.csv("retailers_locations.csv")
 head(df2)
 ```
 
+### Accessing columns
+
+We can use the \$ sign to access specific columns
+
+```{r}
+df2$Company
+
+head(df2$City) 
+```
+
+We can also use the column number
+
+```{r}
+head(df2[, 2])
+```
+
+This accesses the second column.
+
+Breaking down df2\[ , 2\]: Inside the square bracket we can mention rows and columns we want to select. dataftame\[rows, columns\]. Here the value for columns is 2, so second column is selected. There is no value for row, so all rows are selected.
+
+If we wanted to access the first 10 rows and first 3 columns
+
+```{r}
+df2[1:10, 1:3]
+```
+
+We know how the colon sign works from the part on vectors.
+
+::: {.callout-note icon="false"}
+## Exercise:
+
+Subset the third to ninth rows and the second and third columns.
+:::
+
 ### Add image in markdown document
 
 Copy the code between the inverted commas in the markdown document, not in the code chunk!
@@ -248,15 +280,31 @@ Copy the code between the inverted commas in the markdown document, not in the c
 
 ![R logo](https://www.r-project.org/Rlogo.png)
 
-::: {.callout-note icon=false}
-
-## Exercise: 
+::: {.callout-note icon="false"}
+## Exercise:
 
 Download an image from the internet into your project directory. Embed that to the markdown.
+:::
+
+## Writing better markdown
+
+Markdown allows you to write aesthetic documents by following simple rules.
+
+::: {.callout-note icon="false"}
+
+## Exercise:
+
+Refer to [markdown basics documentation](https://quarto.org/docs/authoring/markdown-basics.html) and try the following:
+
+* Insert one link
+* Insert one list
+* Insert text in bold and italics
 
 :::
+
 
 
 ## Lab submission
 
 To submit the lab, zip qmd file, html file, and the folder that has contents for html files into a single zipped folder and submit as your lab.
+

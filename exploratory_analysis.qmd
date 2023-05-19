@@ -24,7 +24,14 @@ Essentially, you perform various analytical operations to ask questions to your 
 
 ## Introduction to data
 
-SFpark is the parking demand management program in San Francisco. The data we're using are entries and exits from public parking garages from 2011-2013, available [here](https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation)
+SFpark is the parking demand management program in San Francisco. The data we're using are entries and exits from public parking garages from 2011-2013, available [here](https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation).
+
+::: {.callout-note icon="false"}
+## Exercise
+
+Go to the link and familiarize yourself with the dataset. Write two lines about why the data was collected and what was sought to understand from data.
+
+:::
 
 First, we need to load the libraries we will be using.
 
@@ -60,7 +67,7 @@ We have six columns:
 ::: {.callout-note icon="false"}
 ## Exercise
 
-Another function to understand a data better glimpse(). Use the function and compare it with head(). What do you find?
+Another function to understand a data better `glimpse()`. Use the function and compare it with `head()`. What do you find?
 :::
 
 ## Tests for data quality
@@ -74,7 +81,7 @@ We need to ensure the data is fit-for-purpose. We can check for completeness, du
 colSums(is.na(df))
 ```
 
-This is a very good dataset in terms of completeness. There are no NA values.
+This is a very good dataset in terms of completeness. There are no `NA` values.
 
 **Duplication**
 
@@ -112,8 +119,6 @@ unique(df$facility)
 ::: {.callout-note icon="false"}
 ## Exercise
 
--   Where in San Francisco are they (in which districts)?
-
 -   In your own words, what does a row of the data represent?
 
 :::
@@ -129,7 +134,7 @@ mean(df$entries)
 ::: {.callout-note icon="false"}
 ## Exercise
 
-That may be skewed by outliers. What is the median?
+* Mean may be skewed by outliers. What is the median? Compare the mean and median. What can you tell from the difference between mean and median?
 
 :::
 
@@ -181,9 +186,9 @@ Every column in a table has a type (for instance, integer, decimal number, strin
 head(total_entries)
 ```
 
-read_csv has read the date as string. These columns only store the letters, and don't know that they represent dates. Before we can use the dates, we need to parse the dates. To parse dates, we will use the lubridate library: https://lubridate.tidyverse.org/
+read_csv has read the date as string. These columns only store the letters, and don't know that they represent dates. Before we can use the dates, we need to parse the dates. To parse dates, we will use the lubridate library
 
--   the mdy function parses dates in month/day/year format
+-   the `mdy` function parses dates in month/day/year format
 
 ```{r, collapse=TRUE}
 total_entries <- mutate(total_entries, date=mdy(date))
@@ -197,7 +202,7 @@ head(total_entries)
 
 Let's look at the mean entries by year, to look for trends over time
 
-First, we need to extract the year from the date column, and assign it to a new column. We previously used mutate for this; this line uses \$ notation which is another way of doing the same thing.
+First, we need to extract the year from the date column, and assign it to a new column. We previously used mutate for this; this line uses `$` notation which is another way of doing the same thing.
 
 ```{r, collapse=TRUE}
 total_entries$year = year(total_entries$date)
@@ -265,7 +270,15 @@ group_by(total_entries, facility, weekend) |>
   pivot_wider(names_from=weekend, values_from=entries)
 ```
 
-Exercise: Compute means by season
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+Compute means by season.
+
+:::
+
 
 ## Visualization
 
@@ -287,7 +300,7 @@ ggplot(citywide_entries, aes(x=date, y=entries)) +
 
 Wow, that's a mess - there's too much day-to-day variation to understand trends. Let's group the data by month and year, and plot again
 
--   the floor_date function returns the beginning of whatever period you put in - in this case, the beginning of the month
+-   the `floor_date` function returns the beginning of whatever period you put in - in this case, the beginning of the month
 
 ```{r, collapse=TRUE}
 citywide_entries$month_year <- floor_date(citywide_entries$date, unit="month")
@@ -298,7 +311,15 @@ ggplot(monthly_entries, aes(x=month_year, y=entries)) +
   geom_line()
 ```
 
+
+::: {.callout-note icon=false}
+
+## Exercise
+
 What month has the highest parking demand? Why do you think that is?
+
+
+:::
 
 This is an interesting plot, but it would be more interesting to see it by garage. We can do this by using data that is not summed up to citywide level, an then telling ggplot to group by the facility
 
@@ -322,15 +343,28 @@ ggplot(garage_month_entries, aes(x=year_month, y=entries, group=facility, color=
   geom_line()
 ```
 
-Which garages have more of a seasonal trend? why?
+::: {.callout-note icon=false}
 
-Exercise: look at weekly trends rather than monthly trends
+## Exercise
+* Which garages have more of a seasonal trend? why?
+
+* Look at weekly trends rather than monthly trends
+
+
+:::
+
+
 
 #### A closer look at Usage types
 
 The data include several usage types - monthly passes, transient users, etc.
 
-Exercise: first, extract all of the unique values of the usage_type column to see what the possibilities are.
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+First, extract all of the unique values of the `usage_type` column to see what the possibilities are.
 
 -   How many entries are from each of the usage types? What usage type is most common?
 
@@ -338,4 +372,7 @@ Exercise: first, extract all of the unique values of the usage_type column to se
 
 -   Make a plot of the monthly trend in number of entries by usage type.
 
-Credits: This tutorials borrows heavily and expands on EDA tutorial taught in PLAN 372 Spring 2023 by Matthew Wigginton Bhagat-Conway.
+
+:::
+
+**Credits: This tutorials borrows heavily and expands on EDA tutorial taught in PLAN 372 Spring 2023 by Matthew Wigginton Bhagat-Conway.**

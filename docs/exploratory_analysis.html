@@ -245,7 +245,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Essentially, you perform various analytical operations to ask questions to your data depending on your need and the nature of the data. EDA is a Socratic approach in that sense.</p>
 <section id="introduction-to-data" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-to-data">Introduction to data</h2>
-<p>SFpark is the parking demand management program in San Francisco. The data we’re using are entries and exits from public parking garages from 2011-2013, available <a href="https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation">here</a></p>
+<p>SFpark is the parking demand management program in San Francisco. The data we’re using are entries and exits from public parking garages from 2011-2013, available <a href="https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation">here</a>.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Go to the link and familiarize yourself with the dataset. Write two lines about why the data was collected and what was sought to understand from data.</p>
+</div>
+</div>
 <p>First, we need to load the libraries we will be using.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co">#library for dealing with tabular data</span></span>
@@ -297,7 +310,7 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Another function to understand a data better glimpse(). Use the function and compare it with head(). What do you find?</p>
+<p>Another function to understand a data better <code>glimpse()</code>. Use the function and compare it with <code>head()</code>. What do you find?</p>
 </div>
 </div>
 </section>
@@ -312,7 +325,7 @@ Exercise
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## usage_type       date    entries      exits   facility   district </span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##          0          0          0          0          0          0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This is a very good dataset in terms of completeness. There are no NA values.</p>
+<p>This is a very good dataset in terms of completeness. There are no <code>NA</code> values.</p>
 <p><strong>Duplication</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking for duplicate records</span></span>
@@ -362,8 +375,7 @@ Exercise
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p>Where in San Francisco are they (in which districts)?</p></li>
-<li><p>In your own words, what does a row of the data represent?</p></li>
+<li>In your own words, what does a row of the data represent?</li>
 </ul>
 </div>
 </div>
@@ -384,7 +396,9 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>That may be skewed by outliers. What is the median?</p>
+<ul>
+<li>Mean may be skewed by outliers. What is the median? Compare the mean and median. What can you tell from the difference between mean and median?</li>
+</ul>
 </div>
 </div>
 </section>
@@ -463,9 +477,9 @@ Exercise
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 1/1/2012 Golden Gateway Garage           5   549</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 1/1/2012 Japan Center Annex Garage     431   440</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>read_csv has read the date as string. These columns only store the letters, and don’t know that they represent dates. Before we can use the dates, we need to parse the dates. To parse dates, we will use the lubridate library: https://lubridate.tidyverse.org/</p>
+<p>read_csv has read the date as string. These columns only store the letters, and don’t know that they represent dates. Before we can use the dates, we need to parse the dates. To parse dates, we will use the lubridate library</p>
 <ul>
-<li>the mdy function parses dates in month/day/year format</li>
+<li>the <code>mdy</code> function parses dates in month/day/year format</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>total_entries <span class="ot">&lt;-</span> <span class="fu">mutate</span>(total_entries, <span class="at">date=</span><span class="fu">mdy</span>(date))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -485,7 +499,7 @@ Exercise
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 2012-01-01 Japan Center Annex Garage     431   440</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s look at the mean entries by year, to look for trends over time</p>
-<p>First, we need to extract the year from the date column, and assign it to a new column. We previously used mutate for this; this line uses $ notation which is another way of doing the same thing.</p>
+<p>First, we need to extract the year from the date column, and assign it to a new column. We previously used mutate for this; this line uses <code>$</code> notation which is another way of doing the same thing.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>total_entries<span class="sc">$</span>year <span class="ot">=</span> <span class="fu">year</span>(total_entries<span class="sc">$</span>date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -596,7 +610,19 @@ Exercise
 <span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Sutter Stockton Garage      2409.   3484.</span></span>
 <span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Union Square Garage         2200.   2208.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Exercise: Compute means by season</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compute means by season.</p>
+</div>
+</div>
 </section>
 <section id="visualization" class="level2">
 <h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
@@ -616,7 +642,7 @@ Exercise
 </div>
 <p>Wow, that’s a mess - there’s too much day-to-day variation to understand trends. Let’s group the data by month and year, and plot again</p>
 <ul>
-<li>the floor_date function returns the beginning of whatever period you put in - in this case, the beginning of the month</li>
+<li>the <code>floor_date</code> function returns the beginning of whatever period you put in - in this case, the beginning of the month</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>citywide_entries<span class="sc">$</span>month_year <span class="ot">&lt;-</span> <span class="fu">floor_date</span>(citywide_entries<span class="sc">$</span>date, <span class="at">unit=</span><span class="st">"month"</span>)</span>
@@ -629,7 +655,19 @@ Exercise
 <p><img src="exploratory_analysis_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>What month has the highest parking demand? Why do you think that is?</p>
+</div>
+</div>
 <p>This is an interesting plot, but it would be more interesting to see it by garage. We can do this by using data that is not summed up to citywide level, an then telling ggplot to group by the facility</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>total_entries<span class="sc">$</span>year_month <span class="ot">=</span> <span class="fu">floor_date</span>(total_entries<span class="sc">$</span>date, <span class="at">unit=</span><span class="st">"month"</span>)</span>
@@ -675,18 +713,44 @@ Exercise
 <p><img src="exploratory_analysis_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Which garages have more of a seasonal trend? why?</p>
-<p>Exercise: look at weekly trends rather than monthly trends</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Which garages have more of a seasonal trend? why?</p></li>
+<li><p>Look at weekly trends rather than monthly trends</p></li>
+</ul>
+</div>
+</div>
 <section id="a-closer-look-at-usage-types" class="level4">
 <h4 class="anchored" data-anchor-id="a-closer-look-at-usage-types">A closer look at Usage types</h4>
 <p>The data include several usage types - monthly passes, transient users, etc.</p>
-<p>Exercise: first, extract all of the unique values of the usage_type column to see what the possibilities are.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>First, extract all of the unique values of the <code>usage_type</code> column to see what the possibilities are.</p>
 <ul>
 <li><p>How many entries are from each of the usage types? What usage type is most common?</p></li>
 <li><p>Are the patterns of usage types different on the weekdays vs.&nbsp;the weekends?</p></li>
 <li><p>Make a plot of the monthly trend in number of entries by usage type.</p></li>
 </ul>
-<p>Credits: This tutorials borrows heavily and expands on EDA tutorial taught in PLAN 372 Spring 2023 by Matthew Wigginton Bhagat-Conway.</p>
+</div>
+</div>
+<p><strong>Credits: This tutorials borrows heavily and expands on EDA tutorial taught in PLAN 372 Spring 2023 by Matthew Wigginton Bhagat-Conway.</strong></p>
 
 
 </section>

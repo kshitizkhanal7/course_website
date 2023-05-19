@@ -12,4 +12,327 @@ We have already used the ggplot to help us with EDA. In this tutorial, we will f
 
 ## Understanding relationships between variables
 
-We will work with Chicago benchmarking data. 
+We will work with Chicago benchmarking data. Different cities publicly release detailed energy consumption data of commercial buildings via open data portals. The data represents a portion of the benchmarking data from Chicago. 
+
+Data visualization can help us understand relationship between variables. We will explore some of the relationships below.
+
+#### Setting up
+
+```{r, message=FALSE}
+library(tidyverse)
+
+df <- read_csv("./chicago_benchmarking.csv")
+```
+
+#### Closer look at the data
+
+```{r}
+str(df)
+```
+
+## Question 1: Do larger buildings consume more electricity?
+
+To answer that simple question, let's plot a simple line graph of area vs electricity use. The simplest code that produces that plot using ggplot follows.
+
+```{r}
+ggplot(df) +
+  aes(x= area, y = electricity_use)+
+  geom_line()
+```
+Breakdown of the syntax:
+
+* ggplot() function, a part of the ggplot() library under tidyverse is used to create ggplot
+* df is the dataset we use 
+* aes() is short for aesthetics. In this we stated what we want to plt in X and Y axes
+* geom_line() signifies that we want to make a line graph
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+What do you interpret from the graph?
+
+:::
+
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+Create a simple graph to answer the question: Do buildings that use a high amount of electricity also use a high amount of natural gas?
+
+:::
+
+
+In the graph, we can see that larger buildings in general do consume more electricity. But this isn't a chart you would publish in a newspaper. Let's work step by step to improve the chart.
+
+### Adding title and axes labels
+
+```{r}
+ggplot(df) +
+  aes(x= area, y = electricity_use)+
+  geom_line()+
+  labs(title = "Larger buildings consume more electricity",
+       x = "Area of the buildings (sq. ft.)",
+       y = "Electricity use")
+```
+This chart is now much more readable and informative. 
+
+Instead of typing whole code to plot every time we add a new feature, we can assign the basic plot to a variable and build from there.
+
+```{r}
+p <- ggplot(df) +
+  aes(x= area, y = electricity_use)+
+  geom_line()+
+  labs(title = "Larger buildings consume more electricity",
+       x = "Area of the buildings (sq. ft.)",
+       y = "Electricity use")
+```
+
+Now we can display the plot using only the object variable.
+
+```{r}
+p
+```
+
+Let's make the plot look better. We can use predefined themes.
+
+```{r}
+p <- p + theme_minimal()
+p
+```
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+* Explain why I did `p <- p + theme_minimal()`
+
+* For the graph on - "Do buildings that use a high amount of electricity also use a high amount of natural gas?", use a different theme, and align the title to center of the plot. 
+
+Hint: You will find the code in ggplot2 theme documentation. Type `?theme` in console and find the function that will help you place the title in center. Look at the examples towards the end of the documentation and implement.
+
+:::
+
+### What's wrong with the units on axes labels?
+
+The units are displayed in scientific notation (e.g. 2e+06) since the values are large. You can change that to more readable values with commas. We can use "scales" package for that.
+
+```{r}
+library(scales)
+
+p  <- p + 
+  scale_x_continuous(labels = comma) +
+  scale_y_continuous(labels = comma)
+
+p
+```
+
+Now we can see the units are in the order of millions. 
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+Improve the graph on electricity use and natural gas using things you just learned.
+
+Additionally, think about how else can you improve the chart? How would you do it?
+
+:::
+
+#### Adding a trend line
+
+```{r}
+p <- p + geom_smooth()
+p
+```
+
+Now that we know the fundamental elements of a ggplot, let's work with different types of plots suitable of various data types. 
+
+## Creating histograms to assess distribution of data
+
+We know that larger buildings generally consume more electricity. Now, let's evaluate how building sizes are distributed in Chicago. For that we create histograms. 
+
+Histograms help us understand:
+
+* Distribution of data
+* Grouping of data
+* Identify central tendency (mean, median), spread, shape
+* Identify outliers/anomalies
+
+```{r}
+ggplot(df, aes(x = area)) +
+  geom_histogram() +
+  labs(title = "Distribution of house sizes", x = "Values", y = "Frequency") +
+  scale_x_continuous(labels = comma) +
+  theme_minimal()
+```
+
+We can see that most of the buildings are smaller, less than million square feet. 
+
+Let's take a closer look at the distribution of smaller houses. You can notice that histogram separates data into groups, and plots the frequency of number of observations in the group as bars. The size of the group is known as bins. 
+
+`binwidth` is used to change the size of bins. The units of binwidth are units of the data we plot. 
+
+```{r}
+ggplot(df, aes(x = area)) +
+  geom_histogram(binwidth = 1000) +
+  labs(title = "Distribution of house sizes", x = "Values", y = "Frequency") +
+  scale_x_continuous(labels = comma) +
+  theme_minimal()
+```
+
+If we only wanted to look at houses lesser than 500,000 sq ft.
+
+```{r}
+ggplot(df %>% filter(area < 500000), aes(x = area)) +
+  geom_histogram(binwidth = 1000) +
+  labs(title = "Distribution of house sizes", x = "Values", y = "Frequency") +
+  scale_x_continuous(labels = comma) +
+  theme_minimal()
+```
+
+In this example, I added a filter to the original dataframe df inside ggplot code. This works in R, but it is not an ideal practice.
+
+
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+* Plot the graph above in which you create a new dataframe to filter houses less than million square feet and use the new dataframe inside ggplot code
+* How else can we improve the plot?
+* Rename labels that are more informative of what the data is about
+* `geom_vline()` can be used to add vertical lines on the histogram. Use documentation to figure out how to implement the function and add lines where the mean and median of the data are.
+
+:::
+
+
+## Visualizing distribution using box plots
+
+Another alternative to visualize distribution is using box plots. It shows mean, median, quartiles, and outliers.
+
+```{r}
+# Create a box plot for the mpg column
+ggplot(df, aes(x = "", y = area)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of area", x = "", y = "area")
+
+```
+
+## Bar charts to plot frequency of categorical data
+
+Bar charts help us visualize categorical data such as colors, zip codes, cities, etc. 
+
+Number of buildings in each zip code
+```{r}
+bldg_zip_df <- df |>
+  group_by(zip_code) %>% 
+  summarise(num_buildings = n())
+```
+
+Bar chart
+
+```{r}
+ggplot(bldg_zip_df , aes(x = zip_code, y = num_buildings)) + 
+  geom_bar(stat = "identity") +
+  labs(title = "Number of buildings in each zipcode",
+       x = "zip code",
+       y = "number of houses") +
+  theme_void()
+```
+
+
+Making it more readable by converting it to a horizontal bar chart instead of a vertical one, and arranging bars by descending order of number of buildings
+
+```{r}
+ggplot(bldg_zip_df , aes(x = reorder(zip_code, num_buildings), y = num_buildings)) + 
+  geom_bar(stat = "identity") +
+  labs(title = "Number of buildings in each zipcode",
+       x = "zip code",
+       y = "number of buildings") +
+  theme_minimal()+
+  coord_flip() #flips the chart from vertical to horizontal
+```
+
+```{r}
+p <- bldg_zip_df |> 
+  top_n(20, num_buildings) |> 
+  mutate(zip_code = reorder(zip_code, num_buildings)) |>
+  ggplot(aes(x = zip_code, y = num_buildings)) + 
+  geom_bar(stat = "identity", fill = 'steelblue') +
+  labs(title = "Number of buildings in each zipcode",
+       x = "zip code",
+       y = "number of buildings") +
+  theme_minimal()+
+  coord_flip()
+p
+```
+
+Adding text labels
+
+```{r}
+p + geom_text(aes(label = num_buildings), hjust = -0.1)  # add labels
+```
+
+## Creating data art using ggplot
+
+For demonstration purposes only.
+
+```{r}
+# Define the parameters for the polar rose
+k <- 7
+n <- 1000
+
+# Create a sequence of angles from 0 to 2pi
+theta <- seq(0, 2 * pi, length.out = n)
+
+# Create the polar rose
+r <- sin(k * theta)
+x <- r * cos(theta)
+y <- r * sin(theta)
+
+# Create a data frame with the x and y coordinates
+data <- data.frame(x = x, y = y)
+
+# Create the plot
+ggplot(data, aes(x = x, y = y)) +
+  geom_path(color = "steelblue", size = 1) +
+  theme_void() +
+  coord_fixed()
+```
+
+### Comparing distribution across zip codes
+
+Another alternative is Violin plots that combine the advantages of histogram and box plots. 
+
+```{r}
+df2 <- df |> 
+  filter(year == 2020) |> 
+  filter(zip_code == c(60611, 60610))
+
+df2
+```
+Let's compare two zip codes with the most number of buildings on the distribution of sizes of the buildings. 
+
+```{r}
+ggplot(df2, aes(x = as.factor(zip_code), y = area)) +
+  geom_violin() 
+```
+
+```{r}
+ggplot(df2, aes(x = as.factor(zip_code), y = area)) +
+  geom_boxplot() 
+```
+
+::: {.callout-note icon=false}
+
+## Exercise
+
+* What do you interpret from the two different distributions from these plots?
+* How are Box plots better than Violin plots?
+* How are Violin plots better than Box plots?
+* In this case, which one do you think works better? Why?
+
+:::
+

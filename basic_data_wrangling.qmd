@@ -6,7 +6,7 @@ editor: visual
 
 # Common data analysis operations in R
 
-While programming is general purpose, ranging from creating websites/apps to launching rockets to creating art, there are some operations that are most commonly used in data analysis. This tutorial covers the most common data analysis operations. 
+While programming is general purpose, ranging from creating websites/apps to launching rockets to creating art, there are some operations that are most commonly used in data analysis. This tutorial covers the most common data analysis operations.
 
 ## Reading various kinds of data
 
@@ -14,21 +14,20 @@ We deal with several data in urban analytics. In my own research, I have used ta
 
 ## Various data types
 
-A typical tabular data contains various types of numbers (integers, decimals), character string (e.g. for places, names, etc.), logical values (True or False), etc. These are called data types. 
+A typical tabular data contains various types of numbers (integers, decimals), character strings (e.g. for places, names, etc.), logical values (True or False), etc. These are called data types.
 
 The main data types are:
 
-* Numeric data are numbers that contain a decimal. Actually they can also be whole numbers but we’ll gloss over that.
-* Integers are whole numbers (those numbers without a decimal point).
-* Logical data take on the value of either TRUE or FALSE. There’s also another special type of logical called NA to represent missing values.
-* Character data are used to represent string values. You can think of character strings as something like a word (or multiple words). A special type of character string is a factor, which is a string but with additional attributes (like levels or an order). We’ll cover factors later.
+-   Numeric data are numbers that contain a decimal. Actually they can also be whole numbers but we'll gloss over that.
+-   Integers are whole numbers (those numbers without a decimal point).
+-   Logical data take on the value of either TRUE or FALSE. There's also another special type of logical called NA to represent missing values.
+-   Character data are used to represent string values. You can think of character strings as something like a word (or multiple words). A special type of character string is a factor, which is a string but with additional attributes (like levels or an order). We'll cover factors later.
 
 R will usually identify data types on its own, but might need some help in correcting sometimes. There are prebuilt operations (functions) that we can use.
 
-You can use class() function to identify the data type (or class).
+You can use `class()` function to identify the data type (or class).
 
 ```{r, collapse=TRUE}
-
 int <- 2L # Need to include L to specify integer
 class(int)
 
@@ -37,7 +36,7 @@ class(num)
 
 identical(int, num) # Check to see if int and num are identical
 
-all.equal(int, num) # On most machines this will be true
+all.equal(int, num) 
 
 char <- "hello"
 class(char)
@@ -74,9 +73,51 @@ class(b_as_date)
 
 months.Date(b_as_date) # extracts month from the object of class Date
 ```
+
+**Lists**
+
+A useful datatype in R is lists. It can store multiple types of data. including other lists. 
+
+```{r}
+mystery_vector <- c(9, "a", 10)
+my_first_list <- list(9, "a", 10)
+
+identical(mystery_vector, my_first_list)
+```
+
+
+::: {.callout-note icon="false"}
+## Exercise
+
+* We had the same elements, but these are not identical. While a vector needs all its components to be of same type, a list doesn't. Look at these two objects in the environment. What do you notice?
+
+* Create a list with one character, one number, and one list. 
+
+:::
+
+To access lists, we use double square brackets `[[]]`.
+
+```{r}
+my_first_list[[2]]
+```
+*Accessing lists within lists*
+
+```{r}
+# Create a list
+my_list <- list("Red", TRUE, 56, c(12, 13, 14))
+
+my_list[[4]][2]
+```
+::: {.callout-note icon="false"}
+## Exercise
+
+* Write a sentence on why we used double square brackets followed by a single square bracket to access the element with value `13`.
+
+:::
+
 ## Dataframes
 
-Dataframes are typical tabular data you have seen in spreadsheets, documents, and other places. 
+Dataframes are typical tabular data you have seen in spreadsheets, documents, and other places.
 
 ```{r, collapse=TRUE}
 # downloading data on E-ZPass Retailers Locations from NY Open Data portal using web link (URL)
@@ -84,12 +125,12 @@ df1 <- read.csv("https://data.ny.gov/api/views/y59h-w6v4/rows.csv?accessType=DOW
 head(df1)
 ```
 
-We can also create dataframes. 
+We can also create dataframes.
 
 ```{r, collapse=TRUE}
 p.height <- c(180, 155, 160, 167, 181)
 p.weight <- c(65, 50, 52, 58, 70)
-p.names <- c("Joanna", "Charlotte", "Helen", "Karen", "Amy")
+p.names <- c("JB", "CS", "HT", "KV", "AR")
 
 dataf <- data.frame(height = p.height, weight = p.weight, names = p.names)
 dataf
@@ -106,13 +147,14 @@ str(dataf) #provides more information about rows, columns and data types
 ```
 
 ## Packages to work with data
-R, or sometimes called base R provides many useful functions to analyze data. Various software developers add to the capability of R by developing functions on top of base R, making the R ecosystem more powerful. These additional functionalities are parts of what we know as packages. People have developed packages for data analysis, visualization, statistical analysis, and many more purposes. 
+
+R, or sometimes called base R provides many useful functions to analyze data. Various software developers add to the capability of R by developing functions on top of base R, making the R ecosystem more powerful. These additional functionalities are parts of what we know as packages. People have developed packages for data analysis, visualization, statistical analysis, and many more purposes.
 
 ## Analyzing data using the Tidyverse framework
 
 ### Tidyverse as a collection of packages
 
-The tidyverse is a collection of related R packages developed to streamline data management, munging and analysis in R. The core tidyverse packages include ggplot2, dplyr, tidyr, lubridate, readr, purrr, tibble, stringr, and forcats. These packages help perform various data analyses tasks more easily and intuitively than the base R functions would allow. 
+The `tidyverse` is a collection of related R packages developed to streamline data management, munging and analysis in R. The core tidyverse packages include `ggplot2`, `dplyr`, `tidyr`, `lubridate`, `readr`, `purrr`, `tibble`, `stringr`, and `forcats`. These packages help perform various data analyses tasks more easily and intuitively than the base R functions would allow.
 
 Install the tidyverse package by typing the following in your console and hitting Enter.
 
@@ -120,12 +162,11 @@ install.packages("tidyverse")
 
 This will install the aforementioned packages as well.
 
-
 ### Tidyverse as a framework for data analysis
 
-The tidyverse is more than just a collection of packages. It's an approach that makes data analysis easier to perform and to understand. 
+The tidyverse is more than just a collection of packages. It's an approach that makes data analysis easier to perform and to understand.
 
-Data is stored as tibbles, an analog of data frames in base R. We will use Tidyverse functions for basic data wrangling in this tutorial. 
+Data is stored as tibbles, an analog of data frames in base R. We will use Tidyverse functions for basic data wrangling in this tutorial.
 
 ![Tidy framework](https://r4ds.hadley.nz/diagrams/data-science/base.png)
 
@@ -151,11 +192,11 @@ df_ny <- read_csv("retailers_locations.csv")
 head(df_ny)
 ```
 
-Remember the function you used earlier is read.csv() - a base R function. The tidyverse equivalent is read_csv(). Both provide similar results. 
+Remember the function you used earlier is `read.csv()` - a base R function. The tidyverse equivalent is `read_csv()`. Both provide similar results.
 
-You notice that the data classes don't make complete sense. 
+You notice that the data classes don't make complete sense.
 
-<dbl> means double, or decimals. However, Zip codes don't have decimals. We can change to right type. 
+`<dbl>` means double, or decimals. However, Zip codes don't have decimals. We can change to right type.
 
 ```{r, collapse=TRUE}
 df_ny <- read_csv("retailers_locations.csv",
@@ -165,13 +206,14 @@ df_ny <- read_csv("retailers_locations.csv",
                 ) 
 class(df_ny$`Zip Code`)
 ```
+
 Another thing you notice is that the column names are really bad.
 
-Some good practices for column names include:
+Remember from last class, some good practices for column names include:
 
-* Use snake case (column_names) or camel case (columnNames)
-* Do not use space (column names)
-* Do not use numbers at the beginning (e.g. 1columnName)
+-   Use snake case (column_names) or camel case (columnNames)
+-   Do not use space (column names)
+-   Do not use numbers at the beginning (e.g. 1columnName)
 
 ### Changing column names
 
@@ -191,11 +233,12 @@ df_ny <- df_ny |>
 
 colnames(df_ny)
 ```
+
 ## Wrangling data
 
 Data wrangling involves cleaning, transforming, and organizing data so it's easier to analyze. It involves processes like cleaning names, merging datasets, filtering only the required portion of data, grouping data, etc.
 
-We already started wrangling data when we cleaned the column names. 
+We already started wrangling data when we cleaned the column names.
 
 ### Keep what you need: select and filter
 
@@ -230,7 +273,7 @@ head(df_filtered2)
 
 ## Change values of columns: mutate
 
-Mutate lets us change values of a column, or create new columns based on values of one or more columns. 
+Mutate lets us change values of a column, or create new columns based on values of one or more columns.
 
 Let's import a new dataset on air quality in North Carolina.
 
@@ -239,7 +282,7 @@ aq_df <- read_csv("https://raw.githubusercontent.com/nkaza/intro2Rbook/master/da
 head(aq_df)
 ```
 
-We can create a new column of Month using the date_2020 column values. Notice the sequence of operations using "|>" operator. The operator is called pipe, and this sequence using pipes is called chaining.
+We can create a new column of Month using the date_2020 column values. Notice the sequence of operations using `|>` operator. The operator is called pipe, and this sequence using pipes is called chaining. Another alternative to the pipe is `%>%`. Both of these do the same thing. The latter pipe was more popular until last year, and base R didn't have a pipe function/symbol yet. Now, base R developers added the `|>` pipe function.
 
 ```{r, collapse=TRUE}
 library(lubridate)
@@ -252,7 +295,13 @@ aq_df1 <- aq_df |>
 head(aq_df1)
 ```
 
-Exercise: Use mutate() to create a new column called temp_c that is value of temperature in degree Celsius. Note: the values in temperature column are in Fahrenheit.
+
+::: {.callout-note icon="false"}
+## Exercise
+
+Use `mutate()` to create a new column called `temp_c` that is value of temperature in degree Celsius. Note: the values in temperature column are in Fahrenheit.
+
+:::
 
 # Grouping and summarizing data
 
@@ -268,4 +317,22 @@ monthly_aq <- aq_df |>
 
 head(monthly_aq)
 ```
-Exercise: Try grouping by two variables, month and ID (represents different sensors), and summarize by mean of average temperature and median of air quality.
+
+
+::: {.callout-note icon="false"}
+## Exercise
+
+Explain, step by step, what's happening at each line of the code in the above chunk.
+
+:::
+
+
+
+::: {.callout-note icon="false"}
+## Exercise
+
+Try grouping by two variables, month and ID (represents different sensors), and summarize by mean of average temperature and median of air quality.
+
+:::
+
+

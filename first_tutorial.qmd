@@ -303,7 +303,6 @@ Refer to [markdown basics documentation](https://quarto.org/docs/authoring/markd
 :::
 
 
-
 ## Lab submission
 
 To submit the lab, zip qmd file, html file, and the folder that has contents for html files into a single zipped folder and submit as your lab.

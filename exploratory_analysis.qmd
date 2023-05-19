@@ -5,26 +5,26 @@ editor: visual
 
 We frequently work on datasets created by others for their own needs. We gather some of those datasets when accessible to us, and explore whether the data can be useful to us or whether we can dig up useful insights from data. This process if often called Exploratory Data Analysis, and is one of the most important and frequently performed activities in (urban) analytics.
 
-Borrowing from R for Data Science (1e), 
+Borrowing from R for Data Science (1e),
 
 EDA is an iterative cycle in which we:
 
-* Generate questions about data.
-* Search for answers by visualizing, transforming, and modelling data.
-* Use what we learn to refine your questions and/or generate new questions.
+-   Generate questions about data.
+-   Search for answers by visualizing, transforming, and modelling data.
+-   Use what we learn to refine your questions and/or generate new questions.
 
-There is no exact recipe for EDA, as it depends on answers we seek and the nature of the data. However, some operations are more frequent than others in typical EDA. 
+There is no exact recipe for EDA, as it depends on answers we seek and the nature of the data. However, some operations are more frequent than others in typical EDA.
 
-* Understanding data
-* Checking data quality
-* Cleaning data to fit our needs
-* Transforming, visualizing, and modeling data
+-   Understanding data
+-   Checking data quality
+-   Cleaning data to fit our needs
+-   Transforming, visualizing, and modeling data
 
 Essentially, you perform various analytical operations to ask questions to your data depending on your need and the nature of the data. EDA is a Socratic approach in that sense.
 
 ## Introduction to data
 
-SFpark is the parking demand management program in San Francisco. The data we're using are entries and exits from public parking garages from 2011-2013, available from https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation
+SFpark is the parking demand management program in San Francisco. The data we're using are entries and exits from public parking garages from 2011-2013, available [here](https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation)
 
 First, we need to load the libraries we will be using.
 
@@ -40,32 +40,43 @@ df <- read_csv("https://github.com/kshitizkhanal7/plan372-exercises/raw/main/sfp
 ```
 
 ### A peek at the data
+
 ```{r, collapse=TRUE}
 head(df)
 ```
+
 We have six columns:
 
- date: the date the data were recorded
+-   date: the date the data were recorded
 
- facility: the garage where the data were recorded
+-   facility: the garage where the data were recorded
 
- district: the district (neighborhood) where the garage is
+-   district: the district (neighborhood) where the garage is
 
- usage_type: the type of payment (e.g. monthly pass, transient/hourly)
+-   usage_type: the type of payment (e.g. monthly pass, transient/hourly)
 
- entries, exits: the number of cars that entered and exited the garage that day that used that type of payment
- 
-Exercise: Another function to understand a data better glimpse(). Use the function and compare it with head(). What do you find? 
- 
+-   entries, exits: the number of cars that entered and exited the garage that day that used that type of payment
+
+::: {.callout-note icon="false"}
+## Exercise
+
+Another function to understand a data better glimpse(). Use the function and compare it with head(). What do you find?
+:::
+
 ## Tests for data quality
 
 We need to ensure the data is fit-for-purpose. We can check for completeness, duplication, and consistency.
+
+**Completeness**
 
 ```{r, collapse=TRUE}
 # Checking missing values in each column
 colSums(is.na(df))
 ```
-This is a very good dataset in terms of completeness. There are no NA values. 
+
+This is a very good dataset in terms of completeness. There are no NA values.
+
+**Duplication**
 
 ```{r, collapse=TRUE}
 # Checking for duplicate records
@@ -76,6 +87,8 @@ duplicated_records
 ```
 
 There are zero duplicate rows. All observations are unique.
+
+**Sanity**
 
 We can also check if observations have values we can expect.
 
@@ -95,11 +108,16 @@ Number of entries is not negative nor are the entries decimals.
 unique(df$facility)
 ```
 
-Exercise: 
 
- * Where in San Francisco are they (in which districts)?
+::: {.callout-note icon="false"}
+## Exercise
 
- * In your own words, what does a row of the data represent?
+-   Where in San Francisco are they (in which districts)?
+
+-   In your own words, what does a row of the data represent?
+
+:::
+
 
 #### How many cars enter a garage on an average day
 
@@ -107,7 +125,13 @@ Exercise:
 mean(df$entries)
 ```
 
-Exercise: That may be skewed by outliers. What is the median?
+
+::: {.callout-note icon="false"}
+## Exercise
+
+That may be skewed by outliers. What is the median?
+
+:::
 
 ## Understanding group characteristics
 
@@ -143,7 +167,6 @@ Maybe we don't want to look at the entire city, but only at garages in the Civic
 civic_center_data <- filter(df, district == "Civic Center")
 ```
 
-
 Now, repeat the above analysis to compute total entries by day, and take the daily average, using only data from Civic Center use group_by and summarize to compute means.
 
 Repeat the process, looking only at garages in the Mission
@@ -160,7 +183,7 @@ head(total_entries)
 
 read_csv has read the date as string. These columns only store the letters, and don't know that they represent dates. Before we can use the dates, we need to parse the dates. To parse dates, we will use the lubridate library: https://lubridate.tidyverse.org/
 
-* the mdy function parses dates in month/day/year format
+-   the mdy function parses dates in month/day/year format
 
 ```{r, collapse=TRUE}
 total_entries <- mutate(total_entries, date=mdy(date))
@@ -174,13 +197,14 @@ head(total_entries)
 
 Let's look at the mean entries by year, to look for trends over time
 
-First, we need to extract the year from the date column, and assign it to a new column. We previously used mutate for this; this line uses $ notation which is another way of doing the same thing.
+First, we need to extract the year from the date column, and assign it to a new column. We previously used mutate for this; this line uses \$ notation which is another way of doing the same thing.
 
 ```{r, collapse=TRUE}
 total_entries$year = year(total_entries$date)
 ```
 
 Make sure it worked
+
 ```{r, collapse=TRUE}
 unique(total_entries$year)
 ```
@@ -205,8 +229,8 @@ group_by(total_entries, facility, year) |>
 Exercise: repeat the above, but get the per-month mean rather than per year, to show seasonal trends. You should have a table with rows for each garage and columns for January, February, etc.
 
 ## Testing our hunches
-Weekdays vs weekends 
-Some garages may be more popular on weekdays than on weekends. We need to repeat the above analysis, but we want a mean for weekends and a mean for weekdays. Lubridate does not have a  weekend function, so we need to use the day of week function to make a new weekend column. First, we can create a day of week column.
+
+Weekdays vs weekends Some garages may be more popular on weekdays than on weekends. We need to repeat the above analysis, but we want a mean for weekends and a mean for weekdays. Lubridate does not have a weekend function, so we need to use the day of week function to make a new weekend column. First, we can create a day of week column.
 
 ```{r, collapse=TRUE}
 total_entries$day_of_week <- wday(total_entries$date, label=T)
@@ -263,7 +287,7 @@ ggplot(citywide_entries, aes(x=date, y=entries)) +
 
 Wow, that's a mess - there's too much day-to-day variation to understand trends. Let's group the data by month and year, and plot again
 
-*  the floor_date function returns the beginning of whatever period you put in - in this case, the beginning of the month
+-   the floor_date function returns the beginning of whatever period you put in - in this case, the beginning of the month
 
 ```{r, collapse=TRUE}
 citywide_entries$month_year <- floor_date(citywide_entries$date, unit="month")
@@ -302,17 +326,16 @@ Which garages have more of a seasonal trend? why?
 
 Exercise: look at weekly trends rather than monthly trends
 
-#### A closer look at Usage types 
+#### A closer look at Usage types
 
 The data include several usage types - monthly passes, transient users, etc.
 
 Exercise: first, extract all of the unique values of the usage_type column to see what the possibilities are.
 
-* How many entries are from each of the usage types? What usage type is most common?
+-   How many entries are from each of the usage types? What usage type is most common?
 
-* Are the patterns of usage types different on the weekdays vs. the weekends?
+-   Are the patterns of usage types different on the weekdays vs. the weekends?
 
-* Make a plot of the monthly trend in number of entries by usage type.
-
+-   Make a plot of the monthly trend in number of entries by usage type.
 
 Credits: This tutorials borrows heavily and expands on EDA tutorial taught in PLAN 372 Spring 2023 by Matthew Wigginton Bhagat-Conway.

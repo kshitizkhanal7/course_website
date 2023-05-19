@@ -245,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Essentially, you perform various analytical operations to ask questions to your data depending on your need and the nature of the data. EDA is a Socratic approach in that sense.</p>
 <section id="introduction-to-data" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-to-data">Introduction to data</h2>
-<p>SFpark is the parking demand management program in San Francisco. The data we’re using are entries and exits from public parking garages from 2011-2013, available from https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation</p>
+<p>SFpark is the parking demand management program in San Francisco. The data we’re using are entries and exits from public parking garages from 2011-2013, available <a href="https://www.sfmta.com/getting-around/drive-park/demand-responsive-pricing/sfpark-evaluation">here</a></p>
 <p>First, we need to load the libraries we will be using.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co">#library for dealing with tabular data</span></span>
@@ -280,17 +280,32 @@ dbl (2): entries, exits
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 Transient  4/6/2011     128   127 16th and Hoff Garage Mission</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We have six columns:</p>
-<p>date: the date the data were recorded</p>
-<p>facility: the garage where the data were recorded</p>
-<p>district: the district (neighborhood) where the garage is</p>
-<p>usage_type: the type of payment (e.g.&nbsp;monthly pass, transient/hourly)</p>
-<p>entries, exits: the number of cars that entered and exited the garage that day that used that type of payment</p>
-<p>Exercise: Another function to understand a data better glimpse(). Use the function and compare it with head(). What do you find?</p>
+<ul>
+<li><p>date: the date the data were recorded</p></li>
+<li><p>facility: the garage where the data were recorded</p></li>
+<li><p>district: the district (neighborhood) where the garage is</p></li>
+<li><p>usage_type: the type of payment (e.g.&nbsp;monthly pass, transient/hourly)</p></li>
+<li><p>entries, exits: the number of cars that entered and exited the garage that day that used that type of payment</p></li>
+</ul>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Another function to understand a data better glimpse(). Use the function and compare it with head(). What do you find?</p>
+</div>
+</div>
 </section>
 </section>
 <section id="tests-for-data-quality" class="level2">
 <h2 class="anchored" data-anchor-id="tests-for-data-quality">Tests for data quality</h2>
 <p>We need to ensure the data is fit-for-purpose. We can check for completeness, duplication, and consistency.</p>
+<p><strong>Completeness</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking missing values in each column</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(df))</span>
@@ -298,6 +313,7 @@ dbl (2): entries, exits
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##          0          0          0          0          0          0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is a very good dataset in terms of completeness. There are no NA values.</p>
+<p><strong>Duplication</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking for duplicate records</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>duplicated_records <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
@@ -309,6 +325,7 @@ dbl (2): entries, exits
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="do">## #   facility &lt;chr&gt;, district &lt;chr&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There are zero duplicate rows. All observations are unique.</p>
+<p><strong>Sanity</strong></p>
 <p>We can also check if observations have values we can expect.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking consistency of Age column</span></span>
@@ -334,11 +351,22 @@ dbl (2): entries, exits
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [11] "Performing Arts Garage"    "Sutter Stockton Garage"   </span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] "Union Square Garage"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Exercise:</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><p>Where in San Francisco are they (in which districts)?</p></li>
 <li><p>In your own words, what does a row of the data represent?</p></li>
 </ul>
+</div>
+</div>
 </section>
 <section id="how-many-cars-enter-a-garage-on-an-average-day" class="level4">
 <h4 class="anchored" data-anchor-id="how-many-cars-enter-a-garage-on-an-average-day">How many cars enter a garage on an average day</h4>
@@ -346,7 +374,19 @@ dbl (2): entries, exits
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df<span class="sc">$</span>entries)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 667.6645</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Exercise: That may be skewed by outliers. What is the median?</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>That may be skewed by outliers. What is the median?</p>
+</div>
+</div>
 </section>
 </section>
 <section id="understanding-group-characteristics" class="level2">

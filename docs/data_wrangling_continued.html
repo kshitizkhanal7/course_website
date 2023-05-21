@@ -225,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="functions" class="level2">
 <h2 class="anchored" data-anchor-id="functions">Functions</h2>
-<p>You have already used several functions. mutate(), mean(), summarize(), etc. are all functions developed for base R or other specific packages like tidyverse. Functions simplify analytics process by making code more readable and concise.</p>
+<p>You have already used several functions. <code>mutate()</code>, <code>mean()</code>, <code>summarize()</code>, etc. are all functions developed for base R or other specific packages like tidyverse. Functions simplify analytics process by making code more readable and concise.</p>
 <p>We can develop our own functions in R. Functions are particularly useful when we need to do the same operation multiple times. Instead of copying and pasting code every time we repeat an operation, we can write a function.</p>
 <p>From : Writing a function has three big advantages over using copy-and-paste (R for Data Science, 2e):</p>
 <ol type="1">
@@ -249,16 +249,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Explanation:</p>
 <ul>
-<li><p>get_squared is the name of the function. It should ideally tell us what the function does concisely and follow good variable naming practices we discussed earlier.</p></li>
-<li><p>function() is the syntax to create functions.</p></li>
-<li><p>num is a input to the function. Function inputs are called parameters.</p></li>
-<li><p>return specifies what the function returns as output. Not all functions have return statements, we will deal with them later in the course.</p></li>
-<li><p>to use the function, we write function name with inputs within the brackets as we did for get_squared(5)</p></li>
+<li><p><code>get_squared</code> is the name of the function that we choose. It should ideally tell us what the function does concisely and follow good variable naming practices we discussed earlier.</p></li>
+<li><p><code>function()</code> is the syntax to create functions.</p></li>
+<li><p><code>num</code> is a input to the function. It’s a variable name that we choose. Function inputs are called parameters.</p></li>
+<li><p><code>return</code> specifies what the function returns as output. Not all functions have return statements, we will deal with them later in the course.</p></li>
+<li><p>to use the function, we write function name with inputs within the brackets as we did for <code>get_squared(5)</code></p></li>
 </ul>
 </section>
 <section id="using-a-function-to-mutate-column-values" class="level3">
 <h3 class="anchored" data-anchor-id="using-a-function-to-mutate-column-values">Using a function to mutate column values</h3>
-<p>We will work on a data of sports arenas</p>
+<p>We will work on a dummy dataframe of sports arenas and their dimensions</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -339,7 +339,7 @@ Exercise
 </div>
 <p>Anatomy of if_else:</p>
 <ul>
-<li><p>if_else if a tidyverse function. The base R equivalent is ifelse</p></li>
+<li><p><code>if_else</code> if a tidyverse function. The base R equivalent is <code>ifelse</code></p></li>
 <li><p>there are three components inside the bracket:</p>
 <ul>
 <li>score&gt;=70 sets a criteria</li>
@@ -373,8 +373,18 @@ Exercise
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 UB       80 Pass   B    </span></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 RW       95 Pass   A</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>if_else is useful when we have only one condition that can be True or False. When we have multiple possible outputs for different conditions, we can use case_when.</p>
-<p>Exercise: I wrote a process to generate dummy data of customers of an imaginary store based on the following code.</p>
+<p><code>if_else</code> is useful when we have only one condition that can be <code>True</code> or <code>False</code>. When we have multiple possible outputs for different conditions, we can use <code>case_when</code>.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I wrote a process to generate dummy data of customers of an imaginary store based on the following code.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create dummy data</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co">#ensures reproducibility</span></span>
@@ -406,9 +416,11 @@ Exercise
 <p>Perform the following:</p>
 <ul>
 <li>Create a new variable called Total spending that is the sum of spending in 2020 and 2021</li>
-<li>Use an ifelse() statement and the mutate() function to create a new variable called Frequent shopper that is equal to “Yes” if a customer’s total spending is greater than $5000, and “No” otherwise.</li>
-<li>Use the group_by() and summarise() functions to calculate the total number of frequent shoppers by different age groups. Create three age groups based on your own judgment.</li>
+<li>Use an <code>ifelse()</code> statement and the <code>mutate()</code> function to create a new variable called Frequent shopper that is equal to “Yes” if a customer’s total spending is greater than $5000, and “No” otherwise.</li>
+<li>Use the <code>group_by()</code> and <code>summarise()</code> functions to calculate the total number of frequent shoppers by different age groups. Create three age groups based on your own judgment.</li>
 </ul>
+</div>
+</div>
 </section>
 </section>
 <section id="joining-different-datasets" class="level2">
@@ -489,7 +501,7 @@ Exercise
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 MULTIPOLYGON (((-76.4056 35...</span></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 MULTIPOLYGON (((-84.00582 3...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>It joins the latter dataset (nc_counties_pop) to the nc_counties_area dataset. Since the name of the common variable (GEOID) is same between both datasets, it automatically joins by that variable.</p>
+<p>It joins the latter dataset <code>nc_counties_pop</code> to the <code>nc_counties_area</code> dataset. Since the name of the common variable (GEOID) is same between both datasets, it automatically joins by that variable.</p>
 <p>The better practice is to make the common variable explicit, in case there are multiple common variables.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nc_counties2 <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(nc_counties_area, nc_counties_pop, <span class="at">by =</span> <span class="st">"GEOID"</span>)</span>
@@ -584,7 +596,17 @@ Exercise
 </div>
 <p>Now, we have all observations in the right dataset and only matching observations from the left dataset, which is why we have 100 observations in the final dataset.</p>
 <p>We will deal with other types of joins later when we need them. Inner joins and left joins are the most commonly used joins.</p>
-<p>Exercise: Using the following tibbles, create inner join between city_population and city_area datasets. Which observations are left out? Create right join between city_density and city employment. Which observations are left out? Write your reflections in a few sentences.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the following tibbles, create inner join between <code>city_population</code> and <code>city_area</code> datasets. Which observations are left out? Create right join between <code>city_density</code> and <code>city_employment</code>. Which observations are left out? Write your reflections in a few sentences.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>city_population <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">city =</span> <span class="fu">c</span>(<span class="st">"New York"</span>, <span class="st">"Los Angeles"</span>, <span class="st">"Chicago"</span>, <span class="st">"Houston"</span>, <span class="st">"Philadelphia"</span>),</span>
@@ -605,6 +627,8 @@ Exercise
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">city =</span> <span class="fu">c</span>(<span class="st">"New York"</span>, <span class="st">"Los Angeles"</span>, <span class="st">"Chicago"</span>, <span class="st">"Houston"</span>, <span class="st">"Phoenix"</span>, <span class="st">"San Antonio"</span>),</span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">employment_rate =</span> <span class="fu">c</span>(<span class="fl">57.1</span>, <span class="fl">51.2</span>, <span class="fl">52.3</span>, <span class="fl">61.2</span>, <span class="fl">50.1</span>, <span class="fl">59.8</span>)</span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </div>
 
 

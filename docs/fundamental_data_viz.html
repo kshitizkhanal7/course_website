@@ -185,6 +185,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./exploratory_analysis.html" class="sidebar-item-text sidebar-link">Exploratory Data Analysis</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fundamental_data_viz.html" class="sidebar-item-text sidebar-link active">Fundamentals of data visualization</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -229,12 +234,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Data visualization helps us mainly with the two analytical goals:</p>
+<p>Data visualization helps us mainly with two analytical goals:</p>
 <ul>
 <li>Making sense of data: identify relationships between variables, identify trends and patterns, and gather insights.</li>
 <li>Communicate findings from data analysis with various audience</li>
 </ul>
-<p>We have already used the ggplot to help us with EDA. In this tutorial, we will focus more on making sense of data using plots, exploring the use of ggplot2, a popular data visualization library used by the R community.</p>
+<p>We have already used the ggplot to help us with EDA. In this tutorial, we will focus more on making sense of data using plots; exploring the use of ggplot2, a popular data visualization library used by the R community.</p>
 <section id="understanding-relationships-between-variables" class="level2">
 <h2 class="anchored" data-anchor-id="understanding-relationships-between-variables">Understanding relationships between variables</h2>
 <p>We will work with Chicago benchmarking data. Different cities publicly release detailed energy consumption data of commercial buildings via open data portals. The data represents a portion of the benchmarking data from Chicago.</p>
@@ -344,7 +349,7 @@ Exercise
 </div>
 </div>
 <p>This chart is now much more readable and informative.</p>
-<p>Instead of typing whole code to plot every time we add a new feature, we can assign the basic plot to a variable and build from there.</p>
+<p>Instead of typing the whole code to plot every time we add a new feature, we can assign the basic plot to a variable and build from there.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> area, <span class="at">y =</span> electricity_use)<span class="sc">+</span></span>

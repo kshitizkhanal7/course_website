@@ -13,6 +13,7 @@ website:
       - basic_data_wrangling.qmd
       - data_wrangling_continued.qmd
       - exploratory_analysis.qmd
+      - fundamental_data_viz.qmd
       
 format:
   html:

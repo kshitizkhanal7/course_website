@@ -3,12 +3,12 @@ title: "Fundamentals of data visualization"
 editor: visual
 ---
 
-Data visualization helps us mainly with the two analytical goals:
+Data visualization helps us mainly with two analytical goals:
 
 * Making sense of data: identify relationships between variables, identify trends and patterns, and gather insights.
 * Communicate findings from data analysis with various audience
 
-We have already used the ggplot to help us with EDA. In this tutorial, we will focus more on making sense of data using plots, exploring the use of ggplot2, a popular data visualization library used by the R community.
+We have already used the ggplot to help us with EDA. In this tutorial, we will focus more on making sense of data using plots; exploring the use of ggplot2, a popular data visualization library used by the R community.
 
 ## Understanding relationships between variables
 
@@ -78,7 +78,7 @@ ggplot(df) +
 ```
 This chart is now much more readable and informative. 
 
-Instead of typing whole code to plot every time we add a new feature, we can assign the basic plot to a variable and build from there.
+Instead of typing the whole code to plot every time we add a new feature, we can assign the basic plot to a variable and build from there.
 
 ```{r}
 p <- ggplot(df) +

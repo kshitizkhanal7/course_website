@@ -3,7 +3,7 @@ title: "Fundamentals of data visualization"
 editor: visual
 ---
 
-Data visualization helps us mainly with two analytical goals:
+Data visualization helps us mainly with two analytic goals:
 
 * Making sense of data: identify relationships between variables, identify trends and patterns, and gather insights.
 * Communicate findings from data analysis with various audience
@@ -37,7 +37,7 @@ To answer that simple question, let's plot a simple line graph of area vs electr
 ```{r}
 ggplot(df) +
   aes(x= area, y = electricity_use)+
-  geom_line()
+  geom_point()
 ```
 Breakdown of the syntax:
 
@@ -71,7 +71,7 @@ In the graph, we can see that larger buildings in general do consume more electr
 ```{r}
 ggplot(df) +
   aes(x= area, y = electricity_use)+
-  geom_line()+
+  geom_point()+
   labs(title = "Larger buildings consume more electricity",
        x = "Area of the buildings (sq. ft.)",
        y = "Electricity use")
@@ -83,7 +83,7 @@ Instead of typing the whole code to plot every time we add a new feature, we can
 ```{r}
 p <- ggplot(df) +
   aes(x= area, y = electricity_use)+
-  geom_line()+
+  geom_point(alpha=0.5)+ #alpha is for the transparency of the dots
   labs(title = "Larger buildings consume more electricity",
        x = "Area of the buildings (sq. ft.)",
        y = "Electricity use")
@@ -147,7 +147,7 @@ p <- p + geom_smooth()
 p
 ```
 
-Now that we know the fundamental elements of a ggplot, let's work with different types of plots suitable of various data types. 
+Now that we know the fundamental elements of a ggplot, let's work with different types of plots suitable of various data types.
 
 ## Creating histograms to assess distribution of data
 
@@ -224,14 +224,15 @@ ggplot(df, aes(x = "", y = area)) +
 
 Bar charts help us visualize categorical data such as colors, zip codes, cities, etc. 
 
-Number of buildings in each zip code
+*Number of buildings in each zip code*
+
 ```{r}
 bldg_zip_df <- df |>
   group_by(zip_code) %>% 
   summarise(num_buildings = n())
 ```
 
-Bar chart
+*Bar chart*
 
 ```{r}
 ggplot(bldg_zip_df , aes(x = zip_code, y = num_buildings)) + 
@@ -302,7 +303,7 @@ ggplot(data, aes(x = x, y = y)) +
   coord_fixed()
 ```
 
-### Comparing distribution across zip codes
+## Comparing distribution across zip codes
 
 Another alternative is Violin plots that combine the advantages of histogram and box plots. 
 
@@ -317,7 +318,9 @@ Let's compare two zip codes with the most number of buildings on the distributio
 
 ```{r}
 ggplot(df2, aes(x = as.factor(zip_code), y = area)) +
-  geom_violin() 
+  geom_violin() +
+  stat_summary(fun.y=mean, geom="point", size=2) + #add mean
+  stat_summary(fun.y=median, geom="point", size=2, color="red") # add median
 ```
 
 ```{r}

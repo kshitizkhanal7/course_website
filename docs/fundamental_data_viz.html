@@ -208,10 +208,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#creating-histograms-to-assess-distribution-of-data" id="toc-creating-histograms-to-assess-distribution-of-data" class="nav-link" data-scroll-target="#creating-histograms-to-assess-distribution-of-data">Creating histograms to assess distribution of data</a></li>
   <li><a href="#visualizing-distribution-using-box-plots" id="toc-visualizing-distribution-using-box-plots" class="nav-link" data-scroll-target="#visualizing-distribution-using-box-plots">Visualizing distribution using box plots</a></li>
   <li><a href="#bar-charts-to-plot-frequency-of-categorical-data" id="toc-bar-charts-to-plot-frequency-of-categorical-data" class="nav-link" data-scroll-target="#bar-charts-to-plot-frequency-of-categorical-data">Bar charts to plot frequency of categorical data</a></li>
-  <li><a href="#creating-data-art-using-ggplot" id="toc-creating-data-art-using-ggplot" class="nav-link" data-scroll-target="#creating-data-art-using-ggplot">Creating data art using ggplot</a>
-  <ul class="collapse">
+  <li><a href="#creating-data-art-using-ggplot" id="toc-creating-data-art-using-ggplot" class="nav-link" data-scroll-target="#creating-data-art-using-ggplot">Creating data art using ggplot</a></li>
   <li><a href="#comparing-distribution-across-zip-codes" id="toc-comparing-distribution-across-zip-codes" class="nav-link" data-scroll-target="#comparing-distribution-across-zip-codes">Comparing distribution across zip codes</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -234,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Data visualization helps us mainly with two analytical goals:</p>
+<p>Data visualization helps us mainly with two analytic goals:</p>
 <ul>
 <li>Making sense of data: identify relationships between variables, identify trends and patterns, and gather insights.</li>
 <li>Communicate findings from data analysis with various audience</li>
@@ -296,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> area, <span class="at">y =</span> electricity_use)<span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fundamental_data_viz_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -340,7 +338,7 @@ Exercise
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> area, <span class="at">y =</span> electricity_use)<span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Larger buildings consume more electricity"</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Area of the buildings (sq. ft.)"</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Electricity use"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -353,7 +351,7 @@ Exercise
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> area, <span class="at">y =</span> electricity_use)<span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#alpha is for the transparency of the dots</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Larger buildings consume more electricity"</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Area of the buildings (sq. ft.)"</span>,</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Electricity use"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -533,13 +531,13 @@ Exercise
 <section id="bar-charts-to-plot-frequency-of-categorical-data" class="level2">
 <h2 class="anchored" data-anchor-id="bar-charts-to-plot-frequency-of-categorical-data">Bar charts to plot frequency of categorical data</h2>
 <p>Bar charts help us visualize categorical data such as colors, zip codes, cities, etc.</p>
-<p>Number of buildings in each zip code</p>
+<p><em>Number of buildings in each zip code</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bldg_zip_df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(zip_code) <span class="sc">%&gt;%</span> </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">num_buildings =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Bar chart</p>
+<p><em>Bar chart</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bldg_zip_df , <span class="fu">aes</span>(<span class="at">x =</span> zip_code, <span class="at">y =</span> num_buildings)) <span class="sc">+</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
@@ -620,8 +618,9 @@ Exercise
 <p><img src="fundamental_data_viz_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="comparing-distribution-across-zip-codes" class="level3">
-<h3 class="anchored" data-anchor-id="comparing-distribution-across-zip-codes">Comparing distribution across zip codes</h3>
+</section>
+<section id="comparing-distribution-across-zip-codes" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-distribution-across-zip-codes">Comparing distribution across zip codes</h2>
 <p>Another alternative is Violin plots that combine the advantages of histogram and box plots.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
@@ -651,14 +650,20 @@ Exercise
 <p>Let’s compare two zip codes with the most number of buildings on the distribution of sizes of the buildings.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(zip_code), <span class="at">y =</span> area)) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>mean, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="co">#add mean</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y=</span>median, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="co"># add median</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.
+ℹ Please use the `fun` argument instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="fundamental_data_viz_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(zip_code), <span class="at">y =</span> area)) <span class="sc">+</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(zip_code), <span class="at">y =</span> area)) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fundamental_data_viz_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -683,7 +688,6 @@ Exercise
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
